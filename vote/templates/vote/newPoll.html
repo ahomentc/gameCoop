@@ -1,0 +1,22 @@
+<script>
+
+function showMessage(){
+    form_count = Number($("[name=extra_field_count]").val());
+    window.alert(form_count);
+    form_count ++;
+    element = $('<input type="text"/>');
+    element.attr('name', 'choice_' + form_count);
+    $("#forms").append(element);
+    $("[name=choice_count]").val(form_count);
+    }
+</script>
+
+
+<form action="/vote/newPoll.html" method='post'>
+{% csrf_token %}
+    <h1>Create a new Poll</h1>
+    <label>Enter name of the poll:</label>
+    {{ form.as_p }}
+    <Button type = 'button' onclick="showMessage()">add another</Button>
+    <input type='submit' value='Submit' />
+</form>

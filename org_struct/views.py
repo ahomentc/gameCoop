@@ -10,4 +10,5 @@ from django.shortcuts import render
 def IndexView(request):
     return render(request, 'org_struct/index.html')
 
-
+def MoneyDistributionView(request):
+    return render(request, 'org_struct/monetary_distribution.html')

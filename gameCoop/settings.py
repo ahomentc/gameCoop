@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'registration', #should be immediately above 'django.contrib.auth'
     'django.contrib.auth',
     'vote.apps.VoteConfig',
+    'home.apps.HomeConfig',
+    'org_struct.apps.OrgStructConfig',
     'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

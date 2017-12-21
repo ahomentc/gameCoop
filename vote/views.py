@@ -10,8 +10,6 @@ from django.forms.formsets import formset_factory
 
 from .models import Choice, Question
 
-
-
 class IndexView(generic.ListView):
     template_name = 'vote/index.html'
     context_object_name = 'latest_question_list'
@@ -74,13 +72,17 @@ def newPollView(request):
     return render(request, 'vote/newPoll.html')
 
 def submitNewPoll(request):
+    # make sure there is one question and at least two choices and that they aren't empty
     if 'question' in request.POST and 'choice_1' in request.POST and 'choice_2' in request.POST and request.POST['question'] != "" and request.POST['choice_1'] != "" and request.POST['choice_2'] != "":
         q = Question.objects.create(question_text=request.POST['question'], pub_date=timezone.now())
+        # for every choice_ in POST, check to see if it isn't empty add this choice to the question created above
         for c in request.POST:
-            if 'choice' in c:
+            if 'choice' in c and request.POST[c] != "":
                 q.choice_set.create(choice_text = request.POST[c])
+        # if everything works send to the index page
         return HttpResponseRedirect(reverse('vote:index'))
     else:
+        # if error take back to newPoll page with error message
         return render(request, 'vote/newPoll.html', {
-            'error_message': "Please enter a question and a choice",
+            'error_message': "Please enter a question and a two choices",
         })

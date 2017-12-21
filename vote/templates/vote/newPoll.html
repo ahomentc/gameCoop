@@ -1,22 +1,33 @@
 <script>
-
-function showMessage(){
-    form_count = Number($("[name=extra_field_count]").val());
-    window.alert(form_count);
-    form_count ++;
-    element = $('<input type="text"/>');
-    element.attr('name', 'choice_' + form_count);
-    $("#forms").append(element);
-    $("[name=choice_count]").val(form_count);
+counter = 2;
+var limit = 10;
+function showMessage(divName){
+    if (counter == limit)  {
+              alert("You have reached the limit of adding " + counter + " inputs");
+         }
+    else {
+         var newdiv = document.createElement('div');
+         newName = 'choice_' + String(counter+1)
+         newdiv.innerHTML = "Choice " + (counter + 1) + ": " + "<input type='text' name = " + newName + " id = " + newName + ">";
+         document.getElementById(divName).appendChild(newdiv);
+         counter++;
+         }
     }
 </script>
 
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<form action="/vote/newPoll.html" method='post'>
+<form action="{% url 'vote:submitNewPoll' %}" method="post">
 {% csrf_token %}
     <h1>Create a new Poll</h1>
-    <label>Enter name of the poll:</label>
-    {{ form.as_p }}
-    <Button type = 'button' onclick="showMessage()">add another</Button>
-    <input type='submit' value='Submit' />
+    <div id="forms">
+        <label>Question: </label>
+        <input type="text" name="question" id="question"/><br/>
+        <label>Choice 1: </label>
+        <input type="text" name="choice_1" id="choice_1"/><br/>
+        <label>Choice 2: </label>
+        <input type="text" name="choice_2" id="choice_2"/>
+    </div>
+    <input type="button" onclick="showMessage('forms')" value="Add Choice"/>
+    <input type="submit" value="Submit"/>
 </form>

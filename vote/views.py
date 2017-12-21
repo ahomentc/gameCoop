@@ -8,7 +8,6 @@ from django.db.models import F
 from django.utils import timezone
 from django.forms.formsets import formset_factory
 
-from .forms import submitPollForm
 from .models import Choice, Question
 
 
@@ -72,27 +71,16 @@ def vote(request, question_id):
         return HttpResponseRedirect(reverse('vote:results', args=(question.id,)))
 
 def newPollView(request):
-    if request.method == 'GET':
-        form = submitPollForm()
+    return render(request, 'vote/newPoll.html')
 
+def submitNewPoll(request):
+    if 'question' in request.POST and 'choice_1' in request.POST and 'choice_2' in request.POST and request.POST['question'] != "" and request.POST['choice_1'] != "" and request.POST['choice_2'] != "":
+        q = Question.objects.create(question_text=request.POST['question'], pub_date=timezone.now())
+        for c in request.POST:
+            if 'choice' in c:
+                q.choice_set.create(choice_text = request.POST[c])
+        return HttpResponseRedirect(reverse('vote:index'))
     else:
-        # A POST request: Handle Form Upload
-        form = submitPollForm(request.POST, extra=request.POST.get('extra_field_count')) # Bind data from request.POST into a PostForm
-        # If data is valid, proceeds to create a new post and redirect the user
-        if form.is_valid():
-            usedChoices = []
-            question = form.cleaned_data['question']
-            choice_1 = form.cleaned_data['choice_1']
-            q = Question.objects.create(question_text=question, pub_date=timezone.now())
-            c1 = q.choice_set.create(choice_text=choice_1, votes=0)
-            usedChoices.append(choice_1)
-
-            choiceList = [choice for choice in form.cleaned_data if choice is not 'question' and choice is not 'choice_1' and choice is not 'extra_field_count']
-            for choiceName in choiceList:
-                c = form.cleaned_data[choiceName]
-                if c != "" and c not in usedChoices:
-                    usedChoices.append(c)
-                    q.choice_set.create(choice_text = c,votes=0)
-            return HttpResponseRedirect(reverse('vote:index'))
-
-    return render(request, 'vote/newPoll.html', {'form': form,})
+        return render(request, 'vote/newPoll.html', {
+            'error_message': "Please enter a question and a choice",
+        })

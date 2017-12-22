@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9ce08e88-6b8e-447c-9f78-c4ca2f898735" name="Default" comment="New version of GameCoop">
+    <list default="true" id="9ce08e88-6b8e-447c-9f78-c4ca2f898735" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vote/models.py" afterPath="$PROJECT_DIR$/vote/models.py" />
     </list>
     <ignored path="settings.py" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

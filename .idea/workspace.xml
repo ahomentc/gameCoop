@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9ce08e88-6b8e-447c-9f78-c4ca2f898735" name="Default" comment="New version of GameCoop">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+    <list default="true" id="9ce08e88-6b8e-447c-9f78-c4ca2f898735" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vote/models.py" afterPath="$PROJECT_DIR$/vote/models.py" />
     </list>
     <ignored path="settings.py" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -148,7 +146,7 @@
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Background" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -238,6 +236,7 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="false" />
     <MESSAGE value="New version of GameCoop" />
     <option name="LAST_COMMIT_MESSAGE" value="New version of GameCoop" />
   </component>

@@ -6,9 +6,9 @@ a maximum number of choices available which is currenty 10
 */
 counter = 2;
 var limit = 10;
-function showMessage(divName){
+function addChoice(divName){
     if (counter == limit)  {
-              alert("You have reached the limit of adding " + counter + " inputs");
+              alert("You have reached the limit of adding " + counter + " choices.");
          }
     else {
          var newdiv = document.createElement('div');
@@ -24,7 +24,7 @@ function showMessage(divName){
 
 <!--Form with 1 question and a minimum of two choices. Is sent to the submitNewPoll View-->
 
-<form action="{% url 'vote:submitNewPoll' %}" method="post">
+<form action="{% url 'vote:submitNewPoll' category.id %}" method="post">
 {% csrf_token %}
     <h1>Create a new Poll</h1>
     <div id="forms">
@@ -35,6 +35,6 @@ function showMessage(divName){
         <label>Choice 2: </label>
         <input type="text" name="choice_2" id="choice_2"/>
     </div>
-    <input type="button" onclick="showMessage('forms')" value="Add Choice"/>
+    <input type="button" onclick="addChoice('forms')" value="Add Choice"/>
     <input type="submit" value="Submit"/>
 </form>

@@ -19,8 +19,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'kyy+*r1&e64@d6n$k7ns6!afyxreuh-3h3wv+!q0fuo!dis6bx'
+try: from private_settings import getSecretKey
+except ImportError:
+    print("Error: make a local version of private_settings.py from the template")
+
+SECRET_KEY = getSecretKey
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

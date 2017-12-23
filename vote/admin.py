@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
-from .models import Choice, Question
+from .models import Choice, Question, Categories
 
 class ChoiceInline(admin.StackedInline):
     model = Choice
@@ -14,6 +14,7 @@ class QuestionAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,               {'fields': ['question_text']}),
         ('Date information', {'fields': ['pub_date'], 'classes': ['collapse']}),
+        ('category',         {'fields': ['category']})
     ]
     inlines = [ChoiceInline]
     list_display = ('question_text', 'pub_date', 'was_published_recently')
@@ -21,3 +22,11 @@ class QuestionAdmin(admin.ModelAdmin):
     search_fields = ['question_text']
 
 admin.site.register(Question, QuestionAdmin)
+
+class CategoryAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None,               {'fields': ['category_name'],}),
+    ]
+
+
+admin.site.register(Categories, CategoryAdmin)

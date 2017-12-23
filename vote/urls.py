@@ -4,11 +4,15 @@ from . import views
 app_name = 'vote'
 
 urlpatterns = [
-    url(r'^$', views.IndexView.as_view(), name='index'),
-    url(r'^(?P<pk>\d+)\/$', views.DetailView.as_view(), name='detail'),
-    url(r'^(?P<pk>\d+)\/results$', views.ResultsView.as_view(), name='results'),
-    url(r'^(?P<question_id>\d+)\/vote$', views.vote, name='vote'),
-    url(r'^newPoll.html$',views.newPollView, name='newPoll'),
-    url(r'^submitNewPoll$', views.submitNewPoll, name='submitNewPoll'),
+    url(r'^(?P<pk>\d+)/$', views.IndexView, name='index'),   #http://127.0.0.1:8000/vote/categories/2
+    url(r'^(?P<id>\d+)/(?P<pk>\d+)\/$', views.DetailView, name='detail'),
+    url(r'^(?P<id>\d+)/(?P<pk>\d+)\/results$', views.ResultsView, name='results'),
+    url(r'^(?P<category_id>\d+)/(?P<question_id>\d+)\/vote$', views.vote, name='vote'),
 
+    url(r'^(?P<pk>\d+)/newPoll.html$',views.newPollView, name='newPoll'),
+    url(r'^(?P<pk>\d+)/submitNewPoll$', views.submitNewPoll, name='submitNewPoll'),
+
+    url(r'^categories$', views.CategoryView.as_view(), name='categories'),  #http://127.0.0.1.8000/vote/category
+    url(r'^newCategory.html$',views.newCategoryView,name='newCategory'),
+    url(r'^submitNewCategory$',views.submitNewCategory.as_view(),name='submitNewCategory'),
 ]

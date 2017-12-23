@@ -1,3 +1,7 @@
+<a href = "{% url 'home:index' %}">Home</a>
+<a href = "{% url 'vote:categories' %}">Poll Categories</a>
+<a href="{% url 'vote:index' category.id %}"> {{ category }} Polls</a>
+
 <h1>{{ question.question_text }}</h1>
 
 <ul>
@@ -6,4 +10,5 @@
 {% endfor %}
 </ul>
 
-<a href="{% url 'vote:detail' question.id %}">Vote again?</a>
+<a href="{% url 'vote:detail' category.id question.id %}">Vote again?</a><br/>
+

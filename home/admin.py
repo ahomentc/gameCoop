@@ -2,5 +2,13 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
+from .models import Categories
 
-# Register your models here.
+class CategoryAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None,               {'fields': ['category_name'],}),
+    ]
+
+
+admin.site.register(Categories, CategoryAdmin)
+

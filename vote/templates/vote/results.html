@@ -1,5 +1,5 @@
 <a href = "{% url 'home:index' %}">Home</a>
-<a href = "{% url 'vote:categories' %}">Poll Categories</a>
+<a href = "{% url 'home:categories' %}">Branches</a>
 <a href="{% url 'vote:index' category.id %}"> {{ category }} Polls</a>
 
 <h1>{{ question.question_text }}</h1>

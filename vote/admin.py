@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
-from .models import Choice, Question, Categories
+from .models import Choice, Question
 
 class ChoiceInline(admin.StackedInline):
     model = Choice
@@ -23,10 +23,3 @@ class QuestionAdmin(admin.ModelAdmin):
 
 admin.site.register(Question, QuestionAdmin)
 
-class CategoryAdmin(admin.ModelAdmin):
-    fieldsets = [
-        (None,               {'fields': ['category_name'],}),
-    ]
-
-
-admin.site.register(Categories, CategoryAdmin)

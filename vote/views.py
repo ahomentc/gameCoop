@@ -7,8 +7,9 @@ from django.views import generic,View
 from django.db.models import F
 from django.utils import timezone
 from django.forms.formsets import formset_factory
+from home import models as home_models
 
-from .models import Choice, Question, Categories
+from .models import Choice, Question
 
 # class IndexView(generic.ListView):
 #     model = Categories
@@ -30,7 +31,7 @@ from .models import Choice, Question, Categories
 #         ).order_by('-pub_date')[:5]
 
 def IndexView(request,pk):
-    category = get_object_or_404(Categories,pk=pk)
+    category = get_object_or_404(home_models.Categories,pk=pk)
     return render(request,'vote/index.html',{
         'category': category, 'latest_question_list': Question.objects.filter(
             pub_date__lte=timezone.now(),category = category
@@ -48,7 +49,7 @@ def IndexView(request,pk):
 #         return Question.objects.filter(pub_date__lte=timezone.now())
 
 def DetailView(request,id,pk):
-    category = get_object_or_404(Categories,pk=id)
+    category = get_object_or_404(home_models.Categories,pk=id)
     question = get_object_or_404(Question,pk=pk)
     return render(request,'vote/detail.html',{
         'category': category,'question':question,'choice_set':Question.objects.filter(pub_date__lte=timezone.now())
@@ -65,7 +66,7 @@ def DetailView(request,id,pk):
 #         return Question.objects.filter(pub_date__lte=timezone.now())
 
 def ResultsView(request,id,pk):
-    category = get_object_or_404(Categories,pk=id)
+    category = get_object_or_404(home_models.Categories,pk=id)
     question = get_object_or_404(Question,pk=pk)
     return render(request,'vote/results.html',{
         'category': category,'question':question,'choice_set':Question.objects.filter(pub_date__lte=timezone.now())
@@ -91,7 +92,7 @@ def vote(request, category_id,question_id):
         return HttpResponseRedirect(reverse('vote:results', args=(category_id,question.id)))
 
 def newPollView(request,pk):
-    category = get_object_or_404(Categories,pk=pk)
+    category = get_object_or_404(home_models.Categories,pk=pk)
     return render(request, 'vote/newPoll.html',{'category':category})
 
 # class submitNewPoll(View):
@@ -113,7 +114,7 @@ def newPollView(request,pk):
 #             })
 
 def submitNewPoll(request,pk):
-    category = get_object_or_404(Categories,pk=pk)
+    category = get_object_or_404(home_models.Categories,pk=pk)
     # make sure there is one question and at least two choices and that they aren't empty
     if 'question' in request.POST and 'choice_1' in request.POST and 'choice_2' in request.POST and request.POST['question'] != "" and request.POST['choice_1'] != "" and request.POST['choice_2'] != "":
         q = Question.objects.create(category = category, question_text=request.POST['question'], pub_date=timezone.now())
@@ -129,27 +130,3 @@ def submitNewPoll(request,pk):
             'error_message': "Please enter a question and a two choices",
             'category': category
         })
-
-class CategoryView(generic.ListView):
-    template_name = 'vote/categories.html'
-    context_object_name = 'categories_list'
-
-    def get_queryset(self):
-        return Categories.objects.all()
-
-def newCategoryView(request):
-    return render(request, 'vote/newCategory.html')
-
-class submitNewCategory(View):
-
-    def post(self, request, *args, **kwargs):
-        if 'new_category_1' in request.POST and request.POST['new_category_1'] != '':
-            Categories.objects.create(category_name=request.POST['new_category_1'])
-            for c in request.POST:
-                if 'new_category_' in c and request.POST[c] != "" and c != "new_category_1":
-                    Categories.objects.create(category_name=request.POST[c])
-            return HttpResponseRedirect(reverse('vote:categories'))
-        else:
-            return render(request, 'vote/newCategory.html', {
-                'error_message': "Please enter at least one category.",
-            })

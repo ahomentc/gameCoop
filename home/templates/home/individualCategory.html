@@ -1,0 +1,12 @@
+{% load static %}
+
+<a href = "{% url 'home:index' %}">Home</a>
+<a href = "{% url 'home:categories' %}">Branches</a><br/>
+
+<h2>{{ category.category_name }} Branch</h2>
+
+<a href="">Work</a><br/>
+<a href="{% url 'vote:index' category.id %}">Polls</a><br/>
+<a href="">Discuss</a><br/>
+<a href="">Info</a>
+

@@ -1,3 +1,7 @@
+{% extends "account/base.html" %}
+
+{% block content %}
 <h1>Home Page</h1>
 <a href = "{% url 'home:categories' %}">Branches</a><br/>
 <a href = "{% url 'org_struct:index' %}">Organizational Structure</a>
+{% endblock %}

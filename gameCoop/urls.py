@@ -17,9 +17,10 @@ from django.conf.urls import url,include
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'^accounts/', include('allauth.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^vote/', include('vote.urls')),
     url(r'^org_struct/', include('org_struct.urls')),
     url(r'^home/', include('home.urls')),
-    url(r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^user_profiles/', include('user_profiles.urls')),
 ]

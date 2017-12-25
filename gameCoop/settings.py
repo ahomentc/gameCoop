@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'allauth'), os.path.join(BASE_DIR, 'templates', 'allauth')], # was 'DIRS':[]
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -42,6 +42,7 @@ TEMPLATES = [
                 # `allauth` needs this from django
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
             ],
         },
     },
@@ -79,8 +80,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-LOGIN_REDIRECT_URL = "/user_profiles/profile"
-ACCOUNT_LOGOUT_REDIRECT_URL ="/accounts/login"
+LOGIN_REDIRECT_URL = "/home"
+ACCOUNT_LOGOUT_REDIRECT_URL ="/home"
 SITE_ID = 1
 
 MIDDLEWARE = [

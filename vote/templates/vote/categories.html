@@ -1,3 +1,6 @@
+{% extends "home/base.html" %}
+
+{% block content %}
 {% load static %}
 
 <a href = "{% url 'home:index' %}">Home</a><br/>
@@ -16,3 +19,5 @@
 <h2>Your Categories:</h2>
 
 <a href = "{% url 'vote:newCategory' %}">Create New Category</a>
+
+{% endblock %}

@@ -1,6 +1,10 @@
+{% extends "home/base.html" %}
+
+{% block content %}
 {% load static %}
 
-<a href = "{% url 'home:index' %}">Home</a><br/>
+<!--<br/>-->
+<!--<a href = "{% url 'home:index' %}">Home</a><br/>-->
 <h2>Branches:</h2>
 
 {% if categories_list %}
@@ -13,6 +17,6 @@
     <p>No categories are available.</p>
 {% endif %}
 
-<h2>Your Categories:</h2>
+<a href = "{% url 'home:newCategory' %}">Create New Branch</a>
 
-<a href = "{% url 'home:newCategory' %}">Create New Category</a>
+{% endblock %}

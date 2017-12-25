@@ -1,7 +1,13 @@
-{% extends "account/base.html" %}
+{% extends "home/base.html" %}
 
 {% block content %}
-<h1>Home Page</h1>
-<a href = "{% url 'home:categories' %}">Branches</a><br/>
-<a href = "{% url 'org_struct:index' %}">Organizational Structure</a>
+<h1>Game Coop</h1>
+<p>------------------------</p>
+
+{% if user.is_authenticated %}
+<h3> {{ user.username }}'s branches:</h3>
+<p>------------------------</p>
+{% endif %}
+
+<a href = "{% url 'org_struct:index' %}">Organizational Structure</a><br/>
 {% endblock %}

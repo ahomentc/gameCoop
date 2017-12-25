@@ -1,8 +1,10 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+
 {% load static %}
 
-<a href = "{% url 'home:index' %}">Home</a>
-<a href = "{% url 'home:categories' %}">Branches</a>
-<a href = "{% url 'home:individualCategory' category.id %}">{{ category }}</a><br/>
+<br/><br/><a href = "{% url 'home:individualCategory' category.id %}">< Back to {{ category }} home</a><br/>
 
 <h2>{{ category.category_name }} Polls</h2>
 
@@ -20,3 +22,5 @@
 {% endif %}
 
 <a href = "{% url 'vote:newPoll' category.id %}">Create New Poll</a>
+
+{% endblock %}

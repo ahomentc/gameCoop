@@ -1,12 +1,16 @@
+{% extends "home/base.html" %}
+
+{% block content %}
 {% load static %}
 
-<a href = "{% url 'home:index' %}">Home</a>
-<a href = "{% url 'home:categories' %}">Branches</a><br/>
+<h2>{{ category.category_name }}</h2>
 
-<h2>{{ category.category_name }} Branch</h2>
-
+<!--if user not part of this then show join-->
+<!--or else don't show work or polls and maybe even discussion-->
+<a href="">Join</a><br/>
 <a href="">Work</a><br/>
 <a href="{% url 'vote:index' category.id %}">Polls</a><br/>
 <a href="">Discuss</a><br/>
 <a href="">Info</a>
 
+{% endblock %}

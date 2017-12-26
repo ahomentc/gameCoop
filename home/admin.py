@@ -7,6 +7,7 @@ from .models import Categories
 class CategoryAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,               {'fields': ['category_name'],}),
+        (None,               {'fields': ['closed_category'],}),
     ]
 
 

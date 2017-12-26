@@ -1,33 +1,13 @@
-<script>
-/*
-Add another category to the form.
-*/
-counter = 1;
-var limit = 10;
-function addCategory(divName){
-    if (counter == limit)  {
-              alert("You have reached the limit of adding " + counter + " categories.");
-         }
-    else {
-         var newdiv = document.createElement('div');
-         newName = 'new_category_' + String(counter+1)
-         newdiv.innerHTML = "New Category " + (counter + 1) + ": " + "<input type='text' name = " + newName + " id = " + newName + ">";
-         document.getElementById(divName).appendChild(newdiv);
-         counter++;
-         }
-    }
-</script>
-
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-<!--Form with 1 category. Is sent to the submitNewCategories View-->
 
 <form action="{% url 'home:submitNewCategory' %}" method="post">
 {% csrf_token %}
-    <h1>Create a new Categories</h1>
+    <h1>Create new Branch</h1>
     <div id="forms">
-        <label>New Category 1: </label>
-        <input type="text" name="new_category_1" id="new_category_1"/><br/>
+        <label>Name: </label>
+        <input type="text" name="new_category" id="new_category"/><br/>
+        <label>Need permission to join? </label>
+        <input type="checkbox" value="true" name="closed_category" id="closed_category"/><br/>
     </div>
     <input type="button" onclick="addCategory('forms')" value="Add Category"/>
     <input type="submit" value="Submit"/>

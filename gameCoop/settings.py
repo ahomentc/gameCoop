@@ -67,7 +67,9 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.twitter',
+    'allauth.socialaccount.providers.github',
 
     'vote.apps.VoteConfig',
     'home.apps.HomeConfig',
@@ -81,7 +83,9 @@ INSTALLED_APPS = [
 ]
 
 LOGIN_REDIRECT_URL = "/home"
-ACCOUNT_LOGOUT_REDIRECT_URL ="/home"
+ACCOUNT_SIGNUP_FORM_CLASS = 'user_profiles.forms.SignupForm'
+ACCOUNT_LOGOUT_REDIRECT_URL = "/home"
+
 SITE_ID = 1
 
 MIDDLEWARE = [

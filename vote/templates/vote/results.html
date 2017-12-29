@@ -2,13 +2,22 @@
 <a href = "{% url 'home:categories' %}">Branches</a>
 <a href="{% url 'vote:index' category.id %}"> {{ category }} Polls</a>
 
+<br/><br/><a href = "{% url 'home:individualCategory' category.id %}">< Back to {{ category }} home</a><br/>
+
 <h1>{{ question.question_text }}</h1>
+
+{{ error_message }}
+
+{% if question.voters.all.count == 1 %}
+    <p>{{ question.voters.all.count }} member voted</p>
+{% else %}
+    <p>{{ question.voters.all.count }} members voted</p>
+{% endif %}
+<p>{{ percent_voted }}% of members voted</p><br/>
+
 
 <ul>
 {% for choice in question.choice_set.all %}
     <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
 {% endfor %}
 </ul>
-
-<a href="{% url 'vote:detail' category.id question.id %}">Vote again?</a><br/>
-

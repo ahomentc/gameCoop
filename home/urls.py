@@ -6,9 +6,13 @@ app_name = 'home'
 urlpatterns = [
     url(r'^$', views.IndexView, name='index'),
 
-    url(r'^categories$', views.CategoryView.as_view(), name='categories'),  #http://127.0.0.1.8000/vote/category
+    url(r'^categories$', views.CategoryView, name='categories'),
     url(r'^newCategory.html$',views.newCategoryView,name='newCategory'),
-    url(r'^submitNewCategory$',views.submitNewCategory.as_view(),name='submitNewCategory'),
+    url(r'^submitNewCategory$',views.submitNewCategory,name='submitNewCategory'),
 
-    url(r'^(?P<pk>\d+)/$', views.IndividualCategoryView, name='individualCategory'),
+    url(r'^(?P<category_id>\d+)/$', views.IndividualCategoryView, name='individualCategory'),
+    url(r'^(?P<category_id>\d+)/joinCategory$', views.JoinCategory, name='joinCategory'),
+    url(r'^(?P<category_id>\d+)/members$', views.membersView, name='membersView'),
+    url(r'^(?P<category_id>\d+)/pendingMembers$', views.pendingMembersView, name='pendingMembersView'),
+    url(r'^(?P<category_id>\d+)/(?P<pending_member_id>\d+)/grant_access$', views.GrantAccess, name='GrantAccess'),
 ]

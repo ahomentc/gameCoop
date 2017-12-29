@@ -4,6 +4,7 @@ Add another choice to the form. Starts by assuming that there
 are two choices already on the form so counter is 2. There is
 a maximum number of choices available which is currenty 10
 */
+
 counter = 2;
 var limit = 10;
 function addChoice(divName){
@@ -13,9 +14,14 @@ function addChoice(divName){
     else {
          var newdiv = document.createElement('div');
          newName = 'choice_' + String(counter+1)
-         newdiv.innerHTML = "Choice " + (counter + 1) + ": " + "<input type='text' name = " + newName + " id = " + newName + ">";
-         document.getElementById(divName).appendChild(newdiv);
-         counter++;
+         oldName = 'choice_' + String(counter)
+
+         if (!document.getElementById(oldName).value){
+             newdiv.innerHTML = "Choice " + (counter + 1) + ": " + "<input type='text' name = " + newName + " id = " + newName + " onkeydown=\"addChoice('forms')\">";
+             document.getElementById(divName).appendChild(newdiv);
+             counter++;
+             document.getElementById(oldName).removeAttribute("onkeydown");
+             }
          }
     }
 </script>
@@ -33,8 +39,8 @@ function addChoice(divName){
         <label>Choice 1: </label>
         <input type="text" name="choice_1" id="choice_1"/><br/>
         <label>Choice 2: </label>
-        <input type="text" name="choice_2" id="choice_2"/>
+        <input type="text" name="choice_2" id="choice_2" onkeydown="addChoice('forms')"/>
     </div>
-    <input type="button" onclick="addChoice('forms')" value="Add Choice"/>
+    <!--<input type="button" onclick="addChoice('forms')" value="Add Choice"/>-->
     <input type="submit" value="Submit"/>
 </form>

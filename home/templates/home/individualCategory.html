@@ -4,13 +4,31 @@
 {% load static %}
 
 <h2>{{ category.category_name }}</h2>
-
 <!--if user not part of this then show join-->
 <!--or else don't show work or polls and maybe even discussion-->
-<a href="">Join</a><br/>
-<a href="">Work</a><br/>
-<a href="{% url 'vote:index' category.id %}">Polls</a><br/>
-<a href="">Discuss</a><br/>
-<a href="">Info</a>
+
+{% if user in category.members.all %}
+    <a href="">Work</a><br/>
+    <a href="{% url 'vote:index' category.id %}">Polls</a><br/>
+    <a href="">Discuss</a><br/>
+    <a href="">Info</a><br/>
+    {% if user in category.moderators.all %}
+        <a href="">Moderator Access</a><br/>
+    {% endif %}
+    {% if category.closed_category %}
+        <a href="{% url 'home:pendingMembersView' category.id %}">Pending Members</a><br/>
+    {% endif %}
+{% endif %}
+
+{% if user in category.pending_members.all %}
+    <p>Pending membership</p>
+{% endif %}
+
+{% if user not in category.members.all %}
+    <a href="{% url 'home:joinCategory' category.id %}">Join</a><br/>
+    <a href="">Info</a><br/>
+{% endif %}
+
+<a href="{% url 'home:membersView' category.id %}">Members</a>
 
 {% endblock %}

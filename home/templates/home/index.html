@@ -5,7 +5,14 @@
 <p>------------------------</p>
 
 {% if user.is_authenticated %}
+{% if member_categories_list %}
 <h3> {{ user.username }}'s branches:</h3>
+    <ul>
+    {% for category in member_categories_list %}
+        <li> <a href="{% url 'home:individualCategory' category.id %}"> {{ category }} </a> </li>
+    {% endfor %}
+    </ul>
+{% endif %}
 <p>------------------------</p>
 {% endif %}
 

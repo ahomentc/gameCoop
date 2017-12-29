@@ -5,4 +5,13 @@
 {% csrf_token %}
 <p>{{ user.username}}'s profile.</p>
 
+{% if member_categories_list %}
+    <p>Member of:</p>
+    <ul>
+    {% for category in member_categories_list %}
+        <li>{{ category }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
 {% endblock %}

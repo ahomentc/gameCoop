@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    {% include "home/base.html" %}
+  <body>
+    {% block body %}
+    <h1>{{ category }} Discussion</h1>
+    <a href="{% url 'discuss:Index' category.id %}">General</a>
+    <a href="{% url 'discuss:IdeaDiscussion' category.id %}">Ideas</a>
+    <a href="{% url 'discuss:VotingDiscussion' category.id %}">Decisions</a>
+
+    <a href="{% url 'discuss:newPost' category.id %}">Submit new Post</a><br/>
+
+    <br/><a href = "{% url 'home:individualCategory' category.id %}">< Back to {{ category }} home</a><br/>
+
+    <br/>{{ no_posts_message }}
+
+    {% for post in postsList %}
+    <div id= {{ post.id }}>
+        <br/><a href="{% url 'discuss:IndividualPost' category.id post.id %}"> {{ post.title }}</a><button id="exp{{post.id}}" onclick="expand('{{ post.id }}', '{{ post.content }}')">v</button>
+    </div>
+    {% endfor %}
+
+    <script>
+    function expand(divName,content){
+        var newdiv = document.createElement('div');
+        newdiv.id = "close" + divName;
+        var checkOnPage =  document.getElementById(newdiv.id);
+        if(checkOnPage == null){
+            newdiv.innerHTML = content + "<br/><input type=button value='^' onclick=\"contract('" + divName + "')\"/>";
+            document.getElementById(divName).appendChild(newdiv);
+            document.getElementById("exp" + divName).style.display='none';
+            }
+        }
+
+    function contract(divName){
+        document.getElementById("close" + divName).remove();
+        document.getElementById("exp" + divName).style.display = '';
+        }
+
+    </script>
+
+    {% block content %}
+    {% endblock %}
+    {% endblock %}
+    {% block extra_body %}
+    {% endblock %}
+  </body>
+</html>
+

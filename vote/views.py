@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Choice, Question
 from home.models import Categories
 
+# decorator that checks if user is a member of the category
 def is_member(func):
     def check(request,*args, **kwargs):
         if 'category_id' in kwargs:
@@ -29,6 +30,7 @@ def is_member(func):
     return check
 
 
+# page with all the polls being voted on in the community
 @is_member
 @login_required
 def IndexView(request,category_id):
@@ -39,6 +41,7 @@ def IndexView(request,category_id):
         ).order_by('-pub_date')[:5]
     })
 
+# shows the options to vote on for a specific poll. Can vote here too.
 @is_member
 @login_required
 def DetailView(request,category_id,question_id):
@@ -48,6 +51,7 @@ def DetailView(request,category_id,question_id):
         'category': category,'question':question,'choice_set':Question.objects.filter(pub_date__lte=timezone.now())
     })
 
+# shows the results of the vote so far
 @is_member
 @login_required
 def ResultsView(request,category_id,question_id):
@@ -58,6 +62,7 @@ def ResultsView(request,category_id,question_id):
         'category': category,'question':question,'choice_set':Question.objects.filter(pub_date__lte=timezone.now()),'percent_voted':percentVoted,
     })
 
+# submit a vote
 @is_member
 @login_required
 def vote(request, category_id,question_id):
@@ -82,20 +87,24 @@ def vote(request, category_id,question_id):
             'percent_voted':percentVoted,
             'error_message': "You have already voted",
         })
+        # add 1 to the count of the selected option
         selected_choice.votes = F('votes') + 1
         selected_choice.save()
+        # add the user to a list of members who voted on the poll
         question.voters.add(request.user)
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('vote:results', args=(category_id,question.id)))
 
+# page to create a new poll
 @is_member
 @login_required
 def newPollView(request,category_id):
     category = get_object_or_404(home_models.Categories,pk=category_id)
     return render(request, 'vote/newPoll.html',{'category':category})
 
+# submit a new poll
 @is_member
 @login_required
 def submitNewPoll(request,category_id):

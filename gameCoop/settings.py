@@ -75,11 +75,13 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'user_profiles.apps.UserProfilesConfig',
     'org_struct.apps.OrgStructConfig',
+    'discuss.apps.DiscussConfig',
     'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions'
 ]
 
 LOGIN_REDIRECT_URL = "/home"

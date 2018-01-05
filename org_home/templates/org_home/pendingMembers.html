@@ -1,0 +1,15 @@
+{% extends "org_home/base.html" %}
+
+{% block content %}
+
+<br/><br/><a href = "{% url 'org_home:individualCategory' category.id %}">< Back to {{ category }} home</a><br/>
+
+{{ error_message }}
+
+<ul>
+{% for pending_member in category.pending_members.all %}
+    <li>{{ pending_member }} <a href="{% url 'org_home:GrantAccess' category.id pending_member.id %}">Grant Access</a></li>
+{% endfor %}
+</ul>
+
+{% endblock %}

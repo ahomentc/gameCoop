@@ -1,8 +1,8 @@
-<a href = "{% url 'home:index' %}">Home</a>
-<a href = "{% url 'home:categories' %}">Branches</a>
+<a href = "{% url 'org_home:index' %}">Home</a>
+<a href = "{% url 'org_home:categories' %}">Branches</a>
 <a href="{% url 'vote:index' category.id %}"> {{ category }} Polls</a>
 
-<br/><br/><a href = "{% url 'home:individualCategory' category.id %}">< Back to {{ category }} home</a><br/>
+<br/><br/><a href = "{% url 'org_home:individualCategory' category.id %}">< Back to {{ category }} home</a><br/>
 
 <h1>{{ question.question_text }}</h1>
 

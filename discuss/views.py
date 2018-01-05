@@ -6,11 +6,11 @@ from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 
-from home.models import Categories
+from org_home.models import Categories
 from .models import Post,Reply
 from .forms import newPost,newMainReply
 
-# home page of discussion. Show the "general" discussion.
+# org_home page of discussion. Show the "general" discussion.
 def Index(request,category_id):
     category = get_object_or_404(Categories,pk=category_id)
     no_posts_message = ''
@@ -97,7 +97,7 @@ def correctlyFormatDict(dict):
         if value is None:
             newDict[key] = None
         else:
-            newDict[key] = flattenDict(value)
+            newDict[key] = sorted(flattenDict(value),key=lambda x:x.pub_date,reverse=True)
     return newDict
 
 # recursively flattens a dictionary that looks like this: {a:{b:None,c:{d:None}},e:None} to a list [a,b,c,d,e]
@@ -115,12 +115,16 @@ def IndividualPost(request,category_id,post_id):
     post = get_object_or_404(Post,pk=post_id)
 
     # list of replies that are not replies to a reply to the post
-    noParentsList = Reply.objects.filter(post=post,parent__isnull=True)
+    noParentsList = Reply.objects.filter(post=post,parent__isnull=True).order_by('-pub_date')
     # dictionary with    keys: noParentsList items   values: list of all the replies to each key
+    sortedDict = {}
     repliesDict = correctlyFormatDict(getRepliesNestedDict(noParentsList,post))
+    for key in sorted(repliesDict.keys(),key=lambda x: x.pub_date):
+        sortedDict[key] = repliesDict[key]
+
 
     form = newMainReply()
-    return render(request,'discuss/individualPost.html',{'category':category,'post':post,'form':form,'repliesDict':repliesDict})
+    return render(request,'discuss/individualPost.html',{'category':category,'post':post,'form':form,'repliesDict':sortedDict})
 
 # submit a reply
 def submitReply(request,category_id,post_id,parent_id=None):

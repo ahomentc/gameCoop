@@ -7,24 +7,24 @@ from django.views import generic,View
 from django.db.models import F
 from django.utils import timezone
 from django.forms.formsets import formset_factory
-from home import models as home_models
+from org_home import models as org_home_models
 from django.contrib.auth.decorators import login_required
 
 from .models import Choice, Question
-from home.models import Categories
+from org_home.models import Categories
 
 # decorator that checks if user is a member of the category
 def is_member(func):
     def check(request,*args, **kwargs):
         if 'category_id' in kwargs:
-            category = get_object_or_404(home_models.Categories,pk=kwargs['category_id'])
+            category = get_object_or_404(org_home_models.Categories,pk=kwargs['category_id'])
         try:
             if request.user in category.members.all():
                 return func(request,*args, **kwargs)
             else:
-                return HttpResponseRedirect(reverse('home:individualCategory', args=(category.id,)))
+                return HttpResponseRedirect(reverse('org_home:individualCategory', args=(category.id,)))
         except:
-            return HttpResponseRedirect(reverse('home:individualCategory', args=(category.id,)))
+            return HttpResponseRedirect(reverse('org_home:individualCategory', args=(category.id,)))
     check.__doc__=func.__doc__
     check.__name__=func.__name__
     return check
@@ -34,7 +34,7 @@ def is_member(func):
 @is_member
 @login_required
 def IndexView(request,category_id):
-    category = get_object_or_404(home_models.Categories,pk=category_id)
+    category = get_object_or_404(org_home_models.Categories,pk=category_id)
     return render(request,'vote/index.html',{
         'category': category, 'latest_question_list': Question.objects.filter(
             pub_date__lte=timezone.now(),category = category
@@ -45,7 +45,7 @@ def IndexView(request,category_id):
 @is_member
 @login_required
 def DetailView(request,category_id,question_id):
-    category = get_object_or_404(home_models.Categories,pk=category_id)
+    category = get_object_or_404(org_home_models.Categories,pk=category_id)
     question = get_object_or_404(Question,pk=question_id)
     return render(request,'vote/detail.html',{
         'category': category,'question':question,'choice_set':Question.objects.filter(pub_date__lte=timezone.now())
@@ -55,7 +55,7 @@ def DetailView(request,category_id,question_id):
 @is_member
 @login_required
 def ResultsView(request,category_id,question_id):
-    category = get_object_or_404(home_models.Categories,pk=category_id)
+    category = get_object_or_404(org_home_models.Categories,pk=category_id)
     question = get_object_or_404(Question,pk=question_id)
     percentVoted = str((len(question.voters.all())/len(category.members.all()))*100)
     return render(request,'vote/results.html',{
@@ -90,25 +90,23 @@ def vote(request, category_id,question_id):
         # add 1 to the count of the selected option
         selected_choice.votes = F('votes') + 1
         selected_choice.save()
-        # add the user to a list of members who voted on the poll
+        # add the user to a list of peo
         question.voters.add(request.user)
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('vote:results', args=(category_id,question.id)))
 
-# page to create a new poll
 @is_member
 @login_required
 def newPollView(request,category_id):
-    category = get_object_or_404(home_models.Categories,pk=category_id)
+    category = get_object_or_404(org_home_models.Categories,pk=category_id)
     return render(request, 'vote/newPoll.html',{'category':category})
 
-# submit a new poll
 @is_member
 @login_required
 def submitNewPoll(request,category_id):
-    category = get_object_or_404(home_models.Categories,pk=category_id)
+    category = get_object_or_404(org_home_models.Categories,pk=category_id)
     # make sure there is one question and at least two choices and that they aren't empty
     if 'question' in request.POST and 'choice_1' in request.POST and 'choice_2' in request.POST and request.POST['question'] != "" and request.POST['choice_1'] != "" and request.POST['choice_2'] != "":
         q = Question.objects.create(category = category, question_text=request.POST['question'], pub_date=timezone.now())

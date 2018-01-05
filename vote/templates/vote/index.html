@@ -1,10 +1,10 @@
-{% extends "home/base.html" %}
+{% extends "org_home/base.html" %}
 
 {% block content %}
 
 {% load static %}
 
-<br/><br/><a href = "{% url 'home:individualCategory' category.id %}">< Back to {{ category }} home</a><br/>
+<br/><br/><a href = "{% url 'org_home:individualCategory' category.id %}">< Back to {{ category }} home</a><br/>
 
 <h2>{{ category.category_name }} Polls</h2>
 

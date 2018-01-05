@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import get_object_or_404, render
-from home.models import Categories
+from org_home.models import Categories
 from django.contrib.auth.decorators import login_required
 
 @login_required

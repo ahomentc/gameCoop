@@ -1,4 +1,4 @@
-{% extends "home/base.html" %}
+{% extends "org_home/base.html" %}
 
 {% block content %}
 {% load static %}
@@ -16,7 +16,7 @@
         <a href="">Moderator Access</a><br/>
     {% endif %}
     {% if category.closed_category %}
-        <a href="{% url 'home:pendingMembersView' category.id %}">Pending Members</a><br/>
+        <a href="{% url 'org_home:pendingMembersView' category.id %}">Pending Members</a><br/>
     {% endif %}
 {% endif %}
 
@@ -25,11 +25,11 @@
 {% endif %}
 
 {% if user not in category.members.all %}
-    <a href="{% url 'home:joinCategory' category.id %}">Join</a><br/>
+    <a href="{% url 'org_home:joinCategory' category.id %}">Join</a><br/>
     <a href="">Info</a><br/>
 {% endif %}
 
-<a href="{% url 'home:membersView' category.id %}">Members</a>
+<a href="{% url 'org_home:membersView' category.id %}">Members</a>
 
 <h2>Activity Feed</h2>
 <a href="">Jared changed the logo</a> <a href="">Yay</a> <a href="">Nay</a> <a href="">Discuss</a>

@@ -72,7 +72,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
 
     'vote.apps.VoteConfig',
-    'home.apps.HomeConfig',
+    'org_home.apps.OrgHomeConfig',
     'user_profiles.apps.UserProfilesConfig',
     'org_struct.apps.OrgStructConfig',
     'discuss.apps.DiscussConfig',
@@ -84,9 +84,9 @@ INSTALLED_APPS = [
     'django_extensions'
 ]
 
-LOGIN_REDIRECT_URL = "/home"
+LOGIN_REDIRECT_URL = "/org_home"
 ACCOUNT_SIGNUP_FORM_CLASS = 'user_profiles.forms.SignupForm'
-ACCOUNT_LOGOUT_REDIRECT_URL = "/home"
+ACCOUNT_LOGOUT_REDIRECT_URL = "/org_home"
 
 SITE_ID = 1
 

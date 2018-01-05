@@ -1,0 +1,13 @@
+{% extends "org_home/base.html" %}
+
+{% block content %}
+
+<br/><br/><a href = "{% url 'org_home:individualCategory' category.id %}">< Back to {{ category }} home</a><br/>
+
+<ul>
+{% for member in category.members.all %}
+    <li>{{ member }}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

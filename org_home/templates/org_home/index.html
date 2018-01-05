@@ -1,4 +1,4 @@
-{% extends "home/base.html" %}
+{% extends "org_home/base.html" %}
 
 {% block content %}
 <h1>Game Coop</h1>
@@ -9,7 +9,7 @@
 <h3> {{ user.username }}'s branches:</h3>
     <ul>
     {% for category in member_categories_list %}
-        <li> <a href="{% url 'home:individualCategory' category.id %}"> {{ category }} </a> </li>
+        <li> <a href="{% url 'org_home:individualCategory' category.id %}"> {{ category }} </a> </li>
     {% endfor %}
     </ul>
 {% endif %}

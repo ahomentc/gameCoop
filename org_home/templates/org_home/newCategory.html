@@ -1,7 +1,7 @@
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 
-<form action="{% url 'home:submitNewCategory' %}" method="post">
+<form action="{% url 'org_home:submitNewCategory' %}" method="post">
 {% csrf_token %}
     <h1>Create new Branch</h1>
     <div id="forms">

@@ -3,8 +3,8 @@
   <body>
     {% block body %}
 
-    <a href = "{% url 'home:index' %}">Home</a>
-    <a href = "{% url 'home:categories' %}">Branches</a>
+    <a href = "{% url 'org_home:index' %}">Home</a>
+    <a href = "{% url 'org_home:categories' %}">Branches</a>
 	{% if user.is_authenticated %}
     <a href = "/user_profiles/profile">Profile</a>
 	<a href="{% url 'account_logout' %}">Sign Out</a>

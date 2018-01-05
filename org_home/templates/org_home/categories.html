@@ -1,0 +1,20 @@
+{% extends "org_home/base.html" %}
+
+{% block content %}
+{% load static %}
+
+<h2>Branches:</h2>
+
+{% if categories_list %}
+    <ul>
+    {% for category in categories_list %}
+        <li> <a href="{% url 'org_home:individualCategory' category.id %}"> {{ category }} </a> </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No categories are available.</p>
+{% endif %}
+
+<a href = "{% url 'org_home:newCategory' %}">Create New Branch</a>
+
+{% endblock %}

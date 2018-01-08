@@ -1,10 +1,14 @@
+{% include "home/base.html"  %}
+<br/><br/>
+{% include "org_home/base.html" with organization=organization %}
+
 <h1>{{ question.question_text }}</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <a href="">Discuss Pros and Cons</a><br/><br/>
 
-<form action="{% url 'vote:vote' category.id question.id %}" method="post">
+<form action="{% url 'vote:vote' organization.id category.id question.id %}" method="post">
 {% csrf_token %}
 {% for choice in question.choice_set.all %}
     <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
@@ -13,4 +17,4 @@
 <input type="submit" value="Vote" />
 </form>
 
-<a href="{% url 'vote:index' category.id %}">Back</a></li>
+<a href="{% url 'vote:index' organization.id category.id %}">Back</a></li>

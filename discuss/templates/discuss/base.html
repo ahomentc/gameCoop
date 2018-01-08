@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html>
-    {% include "org_home/base.html" %}
+    {% include "home/base.html"  %}
+    <br/><br/>
+    {% include "org_home/base.html" with organization=organization %}
   <body>
     {% block body %}
     <h1>{{ category }} Discussion</h1>
-    <a href="{% url 'discuss:Index' category.id %}">General</a>
-    <a href="{% url 'discuss:IdeaDiscussion' category.id %}">Ideas</a>
-    <a href="{% url 'discuss:VotingDiscussion' category.id %}">Decisions</a>
+    <a href="{% url 'discuss:Index' organization.id category.id %}">General</a>
+    <a href="{% url 'discuss:IdeaDiscussion' organization.id category.id %}">Ideas</a>
+    <a href="{% url 'discuss:VotingDiscussion' organization.id category.id %}">Decisions</a>
 
-    <a href="{% url 'discuss:newPost' category.id %}">Submit new Post</a><br/>
+    <a href="{% url 'discuss:newPost' organization.id category.id %}">Submit new Post</a><br/>
 
-    <br/><a href = "{% url 'org_home:individualCategory' category.id %}">< Back to {{ category }} home</a><br/>
+    <br/><a href = "{% url 'org_home:individualCategory' organization.id category.id %}">< Back to {{ category }} home</a><br/>
 
     <br/>{{ no_posts_message }}
 
     {% for post in postsList %}
     <div id= {{ post.id }}>
-        <br/><a href="{% url 'discuss:IndividualPost' category.id post.id %}"> {{ post.title }}</a><button id="exp{{post.id}}" onclick="expand('{{ post.id }}', '{{ post.content }}')">v</button>
+        <br/><a href="{% url 'discuss:IndividualPost' organization.id category.id post.id %}"> {{ post.title }}</a><button id="exp{{post.id}}" onclick="expand('{{ post.id }}', '{{ post.content }}')">v</button>
     </div>
     {% endfor %}
 

@@ -1,13 +1,15 @@
-{% include "org_home/base.html" %}
+{% include "home/base.html"  %}
+<br/><br/>
+{% include "org_home/base.html" with organization=organization %}
 
 {% block content %}
 
 {% if post.discussionType == 'General' %}
-    <br/><br/><a href="{% url 'discuss:Index' category.id %}"> < {{ category }} General</a>
+    <br/><br/><a href="{% url 'discuss:Index' organization.id category.id %}"> < {{ category }} General</a>
 {% elif post.discussionType == 'Idea' %}
-    <br/><br/><a href="{% url 'discuss:IdeaDiscussion' category.id %}"> < {{ category }} Ideas</a>
+    <br/><br/><a href="{% url 'discuss:IdeaDiscussion' organization.id category.id %}"> < {{ category }} Ideas</a>
 {% elif post.discussionType == 'Voting' %}
-    <br/><br/><a href="{% url 'discuss:VotingDiscussion' category.id %}"> < {{ category }} Decisions</a>
+    <br/><br/><a href="{% url 'discuss:VotingDiscussion' organization.id category.id %}"> < {{ category }} Decisions</a>
 {% endif %}
 
 <h3 style="height:2px">{{ post.title }}</h3>
@@ -19,7 +21,7 @@
     </div>
     <a href=""><img border="0" src="https://i.imgur.com/3Pey35k.png" width="12" height="12"/></a>
     <a href=""><img style="padding-left:5px; padding-bottom:0px" border="0" src="https://i.imgur.com/G008NCi.png" width="12" height="12"/></a>
-    <form action="{% url 'discuss:submitReply' category.id post.id %}" method="post">
+    <form action="{% url 'discuss:submitReply' organization.id category.id post.id %}" method="post">
     {% csrf_token %}
         {{ form }}
     <br/><input type="submit" value="Submit" />
@@ -35,7 +37,7 @@
         <br/><button onclick="expand('{{key.id}}')" style="background:none; border:none; padding-top:17px; padding-left:3px; cursor: pointer;">reply</button>
         <a href=""><img border="0" src="https://i.imgur.com/3Pey35k.png" width="12" height="12"/></a>
         <a href=""><img style="padding-left:5px; padding-bottom:0px" border="0" src="https://i.imgur.com/G008NCi.png" width="12" height="12"/></a>
-        <form id={{key.id}} style="display:none" action="{% url 'discuss:submitSubReply' category.id post.id key.id %}" method="post">
+        <form id={{key.id}} style="display:none" action="{% url 'discuss:submitSubReply' organization.id category.id post.id key.id %}" method="post">
             {% csrf_token %}
             {{ form }}
             <br/><input type="submit" value="Submit" /><button onclick="contract('{{key.id}}')">Cancel</button>
@@ -62,7 +64,7 @@
                 <a href=""><img border="0" src="https://i.imgur.com/3Pey35k.png" width="12" height="12"/></a>
                 <a href=""><img style="padding-left:5px; padding-bottom:0px" border="0" src="https://i.imgur.com/G008NCi.png" width="12" height="12"/></a>
 
-                <form id={{item.id}} style="display:none"action="{% url 'discuss:submitSubReply' category.id post.id item.id %}" method="post">
+                <form id={{item.id}} style="display:none"action="{% url 'discuss:submitSubReply' organization.id category.id post.id item.id %}" method="post">
                     {% csrf_token %}
                     {{ form }}
                     <br/><input type="submit" value="Submit" /><input type="button" value="Cancel" onclick="contract('{{item.id}}')"/>

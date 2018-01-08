@@ -7,11 +7,13 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 
 from org_home.models import Categories
+from home.models import Organizations
 from .models import Post,Reply
 from .forms import newPost,newMainReply
 
 # org_home page of discussion. Show the "general" discussion.
-def Index(request,category_id):
+def Index(request,organization_id,category_id):
+    organization = get_object_or_404(Organizations,pk=organization_id)
     category = get_object_or_404(Categories,pk=category_id)
     no_posts_message = ''
     generalPostsList = Post.objects.filter(
@@ -20,10 +22,11 @@ def Index(request,category_id):
         ).order_by('-pub_date')[:10]
     if len(generalPostsList) == 0:
         no_posts_message = "No posts here yet"
-    return render(request,'discuss/index.html',{'category': category,'postsList':generalPostsList,'no_posts_message':no_posts_message})
+    return render(request,'discuss/index.html',{'organization':organization,'category': category,'postsList':generalPostsList,'no_posts_message':no_posts_message})
 
 # the "idea" discussions
-def IdeaDiscussion(request,category_id):
+def IdeaDiscussion(request,organization_id,category_id):
+    organization = get_object_or_404(Organizations,pk=organization_id)
     category = get_object_or_404(Categories,pk=category_id)
     no_posts_message = ''
     ideaPostsList = Post.objects.filter(
@@ -32,10 +35,11 @@ def IdeaDiscussion(request,category_id):
         ).order_by('-pub_date')[:10]
     if len(ideaPostsList) == 0:
         no_posts_message = "No posts here yet"
-    return render(request,'discuss/ideaDiscussion.html',{'category': category,'postsList':ideaPostsList,'no_posts_message':no_posts_message})
+    return render(request,'discuss/ideaDiscussion.html',{'organization':organization,'category': category,'postsList':ideaPostsList,'no_posts_message':no_posts_message})
 
 # the "voting" discussion
-def VotingDiscussion(request,category_id):
+def VotingDiscussion(request,organization_id,category_id):
+    organization = get_object_or_404(Organizations,pk=organization_id)
     category = get_object_or_404(Categories,pk=category_id)
     no_posts_message = ''
     votingPostsList = Post.objects.filter(
@@ -44,16 +48,18 @@ def VotingDiscussion(request,category_id):
         ).order_by('-pub_date')[:10]
     if len(votingPostsList) == 0:
         no_posts_message = "No posts here yet"
-    return render(request,'discuss/ideaDiscussion.html',{'category': category,'postsList':votingPostsList,'no_posts_message':no_posts_message})
+    return render(request,'discuss/ideaDiscussion.html',{'organization':organization,'category': category,'postsList':votingPostsList,'no_posts_message':no_posts_message})
 
 # page to create a new Post
-def newPostView(request,category_id):
+def newPostView(request,organization_id,category_id):
+    organization = get_object_or_404(Organizations,pk=organization_id)
     category = get_object_or_404(Categories,pk=category_id)
     form = newPost()
-    return render(request,'discuss/newPost.html',{'category':category,'form':form})
+    return render(request,'discuss/newPost.html',{'organization':organization,'category':category,'form':form})
 
 # submit that post
-def submitNewPost(request,category_id):
+def submitNewPost(request,organization_id,category_id):
+    organization = get_object_or_404(Organizations,pk=organization_id)
     category = get_object_or_404(Categories,pk=category_id)
     if request.method == "POST":
         form = newPost(request.POST)
@@ -69,14 +75,14 @@ def submitNewPost(request,category_id):
             )
             # go to the page that the post was created for
             if discussionType == 'Idea':
-                return HttpResponseRedirect(reverse('discuss:IdeaDiscussion', args=(category.id,)))
+                return HttpResponseRedirect(reverse('discuss:IdeaDiscussion', args=(organization.id,category.id)))
             elif discussionType == 'Voting':
-                return HttpResponseRedirect(reverse('discuss:VotingDiscussion', args=(category.id,)))
+                return HttpResponseRedirect(reverse('discuss:VotingDiscussion', args=(organization.id,category.id)))
             else:
-                return HttpResponseRedirect(reverse('discuss:Index', args=(category.id,)))
+                return HttpResponseRedirect(reverse('discuss:Index', args=(organization.id,category.id)))
     else:
         form = newPost()
-    return render(request,'discuss/newPost.html',{'category':category,'form':form})
+    return render(request,'discuss/newPost.html',{'organization':organization,'category':category,'form':form})
 
 # recursively get an infinitely nested dictionary of all the replies
 def getRepliesNestedDict(highestList,post):
@@ -91,13 +97,12 @@ def getRepliesNestedDict(highestList,post):
 
 # returns a dictionary where the subdictionaries have been flattened to a list
 def correctlyFormatDict(dict):
-    print(dict)
     newDict = {}
     for key,value in dict.items():
         if value is None:
             newDict[key] = None
         else:
-            newDict[key] = sorted(flattenDict(value),key=lambda x:x.pub_date,reverse=True)
+            newDict[key] = sorted(flattenDict(value),key=lambda x:x.pub_date,reverse=False)
     return newDict
 
 # recursively flattens a dictionary that looks like this: {a:{b:None,c:{d:None}},e:None} to a list [a,b,c,d,e]
@@ -110,7 +115,8 @@ def flattenDict(dict):
     return tempList
 
 # shows an individual post and all the replies to it
-def IndividualPost(request,category_id,post_id):
+def IndividualPost(request,organization_id,category_id,post_id):
+    organization = get_object_or_404(Organizations,pk=organization_id)
     category = get_object_or_404(Categories,pk=category_id)
     post = get_object_or_404(Post,pk=post_id)
 
@@ -124,10 +130,11 @@ def IndividualPost(request,category_id,post_id):
 
 
     form = newMainReply()
-    return render(request,'discuss/individualPost.html',{'category':category,'post':post,'form':form,'repliesDict':sortedDict})
+    return render(request,'discuss/individualPost.html',{'organization':organization,'category':category,'post':post,'form':form,'repliesDict':sortedDict})
 
 # submit a reply
-def submitReply(request,category_id,post_id,parent_id=None):
+def submitReply(request,organization_id,category_id,post_id,parent_id=None):
+    organization = get_object_or_404(Organizations,pk=organization_id)
     category = get_object_or_404(Categories,pk=category_id)
     post = get_object_or_404(Post,pk=post_id)
 
@@ -146,7 +153,7 @@ def submitReply(request,category_id,post_id,parent_id=None):
                 user=request.user,
                 pub_date=timezone.now()
             )
-            return HttpResponseRedirect(reverse('discuss:IndividualPost', args=(category.id,post.id)))
+            return HttpResponseRedirect(reverse('discuss:IndividualPost', args=(organization.id,category.id,post.id)))
     else:
         form = newMainReply()
-    return render(request,'discuss/individualPost.html',{'category':category,'post':post,'form':form})
+    return render(request,'discuss/individualPost.html',{'organization':organization,'category':category,'post':post,'form':form})

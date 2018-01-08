@@ -43,6 +43,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
             ],
         },
     },
@@ -72,9 +73,11 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
 
     'vote.apps.VoteConfig',
+    'home.apps.HomeConfig',
     'org_home.apps.OrgHomeConfig',
     'user_profiles.apps.UserProfilesConfig',
     'org_struct.apps.OrgStructConfig',
+    'org_work.apps.OrgWorkConfig',
     'discuss.apps.DiscussConfig',
     'django.contrib.admin',
     'django.contrib.contenttypes',
@@ -84,9 +87,9 @@ INSTALLED_APPS = [
     'django_extensions'
 ]
 
-LOGIN_REDIRECT_URL = "/org_home"
+LOGIN_REDIRECT_URL = "/home"
 ACCOUNT_SIGNUP_FORM_CLASS = 'user_profiles.forms.SignupForm'
-ACCOUNT_LOGOUT_REDIRECT_URL = "/org_home"
+ACCOUNT_LOGOUT_REDIRECT_URL = "/accounts/login"
 
 SITE_ID = 1
 

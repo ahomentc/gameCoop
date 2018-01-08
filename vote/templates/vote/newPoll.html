@@ -26,11 +26,15 @@ function addChoice(divName){
     }
 </script>
 
+{% include "home/base.html"  %}
+<br/><br/>
+{% include "org_home/base.html" with organization=organization %}
+
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <!--Form with 1 question and a minimum of two choices. Is sent to the submitNewPoll View-->
 
-<form action="{% url 'vote:submitNewPoll' category.id %}" method="post">
+<form action="{% url 'vote:submitNewPoll' organization.id category.id %}" method="post">
 {% csrf_token %}
     <h1>Create a new Poll</h1>
     <div id="forms">

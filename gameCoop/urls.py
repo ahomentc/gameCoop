@@ -20,8 +20,10 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^vote/', include('vote.urls')),
+    url(r'^org_work/', include('org_work.urls')),
     url(r'^org_struct/', include('org_struct.urls')),
     url(r'^org_home/', include('org_home.urls')),
     url(r'^user_profiles/', include('user_profiles.urls')),
     url(r'^discuss/', include('discuss.urls')),
+    url(r'^home/', include('home.urls')),
 ]

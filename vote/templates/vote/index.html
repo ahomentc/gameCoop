@@ -1,10 +1,12 @@
-{% extends "org_home/base.html" %}
+{% include "home/base.html"  %}
+<br/><br/>
+{% include "org_home/base.html" with organization=organization %}
 
 {% block content %}
 
 {% load static %}
 
-<br/><br/><a href = "{% url 'org_home:individualCategory' category.id %}">< Back to {{ category }} home</a><br/>
+<br/><br/><a href = "{% url 'org_home:individualCategory' organization.id category.id %}">< Back to {{ category }} home</a><br/>
 
 <h2>{{ category.category_name }} Polls</h2>
 
@@ -16,13 +18,13 @@
     <ul>
     {% for question in latest_question_list %}
         <!--this works but category is not being passed-->
-        <li><a href="{% url 'vote:detail' category.id question.id %}">{{ question.question_text }}</a></li>
+        <li><a href="{% url 'vote:detail' organization.id category.id question.id %}">{{ question.question_text }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
 
-<a href = "{% url 'vote:newPoll' category.id %}">Create New Poll</a>
+<a href = "{% url 'vote:newPoll' organization.id category.id %}">Create New Poll</a>
 
 {% endblock %}

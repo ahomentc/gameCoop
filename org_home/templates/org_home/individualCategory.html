@@ -1,4 +1,6 @@
-{% extends "org_home/base.html" %}
+{% include "home/base.html"  %}
+<br/><br/>
+{% include "org_home/base.html" with organization=organization %}
 
 {% block content %}
 {% load static %}
@@ -8,15 +10,15 @@
 <!--or else don't show work or polls and maybe even discussion-->
 
 {% if user in category.members.all %}
-    <a href="">Work</a><br/>
-    <a href="{% url 'vote:index' category.id %}">Polls</a><br/>
-    <a href="{% url 'discuss:Index' category.id %}">Discuss</a><br/>
-    <a href="">Info</a><br/>
+    <a style="text-decoration:none;" href="">Work</a><br/>
+    <a style="text-decoration:none;" href="{% url 'vote:index' organization.id category.id %}">Polls</a><br/>
+    <a style="text-decoration:none;" href="{% url 'discuss:Index' organization.id category.id %}">Discuss</a><br/>
+    <a style="text-decoration:none;" href="">Info</a><br/>
     {% if user in category.moderators.all %}
-        <a href="">Moderator Access</a><br/>
+        <a style="text-decoration:none;" href="">Moderator Access</a><br/>
     {% endif %}
     {% if category.closed_category %}
-        <a href="{% url 'org_home:pendingMembersView' category.id %}">Pending Members</a><br/>
+        <a style="text-decoration:none;" href="{% url 'org_home:pendingMembersView' organization.id category.id %}">Pending Members</a><br/>
     {% endif %}
 {% endif %}
 
@@ -25,11 +27,11 @@
 {% endif %}
 
 {% if user not in category.members.all %}
-    <a href="{% url 'org_home:joinCategory' category.id %}">Join</a><br/>
-    <a href="">Info</a><br/>
+    <a style="text-decoration:none;" href="{% url 'org_home:joinCategory' organization.id category.id %}">Join</a><br/>
+    <a style="text-decoration:none;" href="">Info</a><br/>
 {% endif %}
 
-<a href="{% url 'org_home:membersView' category.id %}">Members</a>
+<a style="text-decoration:none;" href="{% url 'org_home:membersView' organization.id category.id %}">Members</a>
 
 <h2>Activity Feed</h2>
 <a href="">Jared changed the logo</a> <a href="">Yay</a> <a href="">Nay</a> <a href="">Discuss</a>

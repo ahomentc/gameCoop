@@ -1,0 +1,15 @@
+{% include "home/base.html"  %}
+
+<h1>Group Roots</h1>
+<p>------------------------</p>
+
+{% if member_organizations_list %}
+<h3> Your organizations:</h3>
+    <ul>
+    {% for organization in member_organizations_list %}
+        <li> <a href="{% url 'org_home:index' organization.id %}"> {{ organization }} </a> </li>
+    {% endfor %}
+    </ul>
+<p>------------------------</p>
+{% endif %}
+

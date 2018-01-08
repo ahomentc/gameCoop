@@ -7,11 +7,14 @@ from django.views import generic
 from django.contrib.auth.decorators import login_required
 
 from django.shortcuts import render
+from home.models import Organizations
 
 @login_required
-def IndexView(request):
-    return render(request, 'org_struct/index.html')
+def IndexView(request, organization_id):
+    organization = get_object_or_404(Organizations,id=organization_id)
+    return render(request, 'org_struct/index.html',{'organization':organization})
 
 @login_required
-def MoneyDistributionView(request):
-    return render(request, 'org_struct/monetary_distribution.html')
+def MoneyDistributionView(request, organization_id):
+    organization = get_object_or_404(Organizations,id=organization_id)
+    return render(request, 'org_struct/monetary_distribution.html',{'organization':organization})

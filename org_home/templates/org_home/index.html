@@ -1,20 +1,23 @@
-{% extends "org_home/base.html" %}
+{% include "home/base.html"  %}
+<br/><br/>
+{% include "org_home/base.html" with organization=organization %}
 
 {% block content %}
-<h1>Game Coop</h1>
+<h1>{{ organization }}</h1>
 <p>------------------------</p>
 
 {% if user.is_authenticated %}
 {% if member_categories_list %}
-<h3> {{ user.username }}'s branches:</h3>
+<h3> Your branches:</h3>
     <ul>
     {% for category in member_categories_list %}
-        <li> <a href="{% url 'org_home:individualCategory' category.id %}"> {{ category }} </a> </li>
+        <li> <a style="text-decoration:none;" href="{% url 'org_home:individualCategory' organization.id category.id %}"> {{ category }} </a> </li>
     {% endfor %}
     </ul>
 {% endif %}
 <p>------------------------</p>
 {% endif %}
 
-<a href = "{% url 'org_struct:index' %}">Organizational Structure</a><br/>
+<a href = "{% url 'org_struct:index' organization.id %}">Organizational Structure</a><br/>
+
 {% endblock %}

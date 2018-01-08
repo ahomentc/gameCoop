@@ -3,15 +3,10 @@
   <body>
     {% block body %}
 
-    <a href = "{% url 'org_home:index' %}">Home</a>
-    <a href = "{% url 'org_home:categories' %}">Branches</a>
-	{% if user.is_authenticated %}
-    <a href = "/user_profiles/profile">Profile</a>
-	<a href="{% url 'account_logout' %}">Sign Out</a>
-	{% else %}
-	<a href="{% url 'account_login' %}">Sign In</a>
-	<a href="{% url 'account_signup' %}">Sign Up</a>
-	{% endif %}
+    {% if organization_id != "" %}
+    <a style="text-decoration:none" href = "{% url 'org_home:index' organization.id %}">{{ organization }} Home |</a>
+    <a style="text-decoration:none" href = "{% url 'org_home:categories' organization.id %}">{{ organization }} Branches</a>
+    {% endif %}
 
     {% block content %}
     {% endblock %}

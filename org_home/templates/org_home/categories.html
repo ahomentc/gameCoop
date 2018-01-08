@@ -1,4 +1,6 @@
-{% extends "org_home/base.html" %}
+{% include "home/base.html"  %}
+<br/><br/>
+{% include "org_home/base.html" with organization=organization %}
 
 {% block content %}
 {% load static %}
@@ -8,13 +10,13 @@
 {% if categories_list %}
     <ul>
     {% for category in categories_list %}
-        <li> <a href="{% url 'org_home:individualCategory' category.id %}"> {{ category }} </a> </li>
+        <li> <a href="{% url 'org_home:individualCategory' organization.id category.id %}"> {{ category }} </a> </li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No categories are available.</p>
 {% endif %}
 
-<a href = "{% url 'org_home:newCategory' %}">Create New Branch</a>
+<a href = "{% url 'org_home:newCategory' organization.id %}">Create New Branch</a>
 
 {% endblock %}

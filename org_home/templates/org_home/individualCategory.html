@@ -8,9 +8,8 @@
 <h2>{{ category.category_name }}</h2>
 <!--if user not part of this then show join-->
 <!--or else don't show work or polls and maybe even discussion-->
-
 {% if user in category.members.all %}
-    <a style="text-decoration:none;" href="">Work</a><br/>
+    <a style="text-decoration:none;" href="{% url 'org_work:index' organization.id category.id %}">Work</a><br/>
     <a style="text-decoration:none;" href="{% url 'vote:index' organization.id category.id %}">Polls</a><br/>
     <a style="text-decoration:none;" href="{% url 'discuss:Index' organization.id category.id %}">Discuss</a><br/>
     <a style="text-decoration:none;" href="">Info</a><br/>
@@ -32,6 +31,13 @@
 {% endif %}
 
 <a style="text-decoration:none;" href="{% url 'org_home:membersView' organization.id category.id %}">Members</a>
+
+{% if subCategories %}
+<h2>Sub Branches:</h2>
+    {% for cat in subCategories %}
+        <br/><a style="text-decoration:none;" href="{% url 'org_home:individualCategory' organization.id cat.id %}"> {{ cat }} </a>
+    {% endfor %}
+{% endif %}
 
 <h2>Activity Feed</h2>
 <a href="">Jared changed the logo</a> <a href="">Yay</a> <a href="">Nay</a> <a href="">Discuss</a>

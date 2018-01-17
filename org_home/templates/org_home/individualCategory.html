@@ -32,12 +32,16 @@
 
 <a style="text-decoration:none;" href="{% url 'org_home:membersView' organization.id category.id %}">Members</a>
 
-{% if subCategories %}
 <h2>Sub Branches:</h2>
+{% if subCategories %}
     {% for cat in subCategories %}
         <br/><a style="text-decoration:none;" href="{% url 'org_home:individualCategory' organization.id cat.id %}"> {{ cat }} </a>
     {% endfor %}
+    <br/><a style = "text-decoration:none" href="{% url 'org_home:newSubCategory' organization.id category.id %}">New Sub Branch</a>
+{% else %}
+    <a style = "text-decoration:none" href="{% url 'org_home:newSubCategory' organization.id category.id %}">Create the First Sub Branch</a>
 {% endif %}
+
 
 <h2>Activity Feed</h2>
 <a href="">Jared changed the logo</a> <a href="">Yay</a> <a href="">Nay</a> <a href="">Discuss</a>

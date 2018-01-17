@@ -4,14 +4,22 @@
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-
+{% if category == None %}
 <form action="{% url 'org_home:submitNewCategory' organization.id %}" method="post">
+{% else %}
+<form action="{% url 'org_home:submitNewSubCategory' organization.id category.id %}" method="post">
+{% endif %}
 {% csrf_token %}
     <h1>Create new Branch</h1>
     <div id="forms">
         <label>Name: </label>
         <input type="text" name="new_category" id="new_category"/><br/><br/>
-        <label>Need permission to join? </label>
+        {% if category == None %}
+            {{ form }}
+        {% else %}
+            <p>Parent: {{ category }}</p>
+        {% endif %}
+        <br/><br/><label>Need permission to join? </label>
         <input type="checkbox" onclick="permission()" name="closed_category" id="closed_category"/><br/><br/>
         <label id="1" style="display:none">Who can grant permission? </label><br/>
         <label id="2" style="display:none">All Members</label>

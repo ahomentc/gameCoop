@@ -54,6 +54,7 @@ def VotingDiscussion(request,organization_id,category_id):
 def newPostView(request,organization_id,category_id):
     organization = get_object_or_404(Organizations,pk=organization_id)
     category = get_object_or_404(Categories,pk=category_id)
+
     form = newPost()
     return render(request,'discuss/newPost.html',{'organization':organization,'category':category,'form':form})
 

@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Categories
 from home.models import Organizations
+from .forms import ParentCategories
 
 # org_home page of a coop
 @login_required
@@ -32,46 +33,62 @@ def CategoryView(request,organization_id):
 def IndividualCategoryView(request,organization_id,category_id):
     organization = get_object_or_404(Organizations,id=organization_id)
     category = get_object_or_404(Categories,pk=category_id)
-    return render(request,'org_home/individualCategory.html',{'organization':organization,'category': category})
+    subCategories = Categories.objects.filter(parent=category)
+    return render(request,'org_home/individualCategory.html',{'organization':organization,'category': category,'subCategories':subCategories})
 
 # page to create a new category/root/branch
 @login_required
-def newCategoryView(request,organization_id):
+def newCategoryView(request,organization_id,category_id=None):
     organization = get_object_or_404(Organizations,id=organization_id)
-    return render(request, 'org_home/newCategory.html',{'organization':organization})
+    if category_id != None:
+        category = get_object_or_404(Categories,pk=category_id)
+    else:
+        category = None
+    form = ParentCategories()
+    parentsList = [("None","None")]
+    for cat in Categories.objects.filter(organization=organization,parent = category):
+        parentsList.append((cat.category_name,cat.category_name))
+    form.fields['parent_branch'].choices = parentsList
+    return render(request, 'org_home/newCategory.html',{'organization':organization,'category':category,'form':form})
 
 # submit a new category
 @login_required
-def submitNewCategory(request,organization_id):
+def submitNewCategory(request,organization_id,category_id=None):
     organization = get_object_or_404(Organizations,id=organization_id)
-    if 'new_category' in request.POST and request.POST['new_category'] != '':
-        closedCategory = False
-        gate_keeper = ''
-        # closed_category is a checkbox of if people need persmission to join the category
-        if 'closed_category' in request.POST:
-            closedCategory = True
-            # gate_keeper is who can let people join the community. It can either be anyone in the community
-            # or the moderator. access is the name of the radio field
-            gate_keeper = request.POST['access']
+    if request.method == "POST":
+        if 'new_category' in request.POST and request.POST['new_category'] != '':
+            closedCategory = False
+            gate_keeper = ''
+            # closed_category is a checkbox of if people need persmission to join the category
+            if 'closed_category' in request.POST:
+                closedCategory = True
+                # gate_keeper is who can let people join the community. It can either be anyone in the community
+                # or the moderator. access is the name of the radio field
+                gate_keeper = request.POST['access']
 
-        categoryName =  request.POST['new_category']
-        # first word in category name uppercased
-        formatedCategoryName = ' '.join(word[0].upper() + word[1:] for word in categoryName.split())
+            categoryName =  request.POST['new_category']
+            # first word in category name uppercased
+            formatedCategoryName = ' '.join(word[0].upper() + word[1:] for word in categoryName.split())
 
-        # returns error if the category name already exists
-        if Categories.objects.filter(category_name=formatedCategoryName).exists():
-            return render(request, 'org_home/newCategory.html', {'organization':organization,'error_message': formatedCategoryName + " already exists.",})
+            # returns error if the category name already exists
+            if Categories.objects.filter(category_name=formatedCategoryName).exists():
+                return render(request, 'org_home/newCategory.html', {'organization':organization,'error_message': formatedCategoryName + " already exists.",})
 
-        # create the category, add the creator to the members list, and make the creator a moderator
-        category = Categories.objects.create(organization = organization, category_name=formatedCategoryName,closed_category = closedCategory,gateKeeper=gate_keeper)
-        category.members.add(request.user)
-        category.moderators.add(request.user)
-        return HttpResponseRedirect(reverse('org_home:categories', args=(organization.id,)))
-    else:
-        return render(request, 'org_home/newCategory.html', {
-            'organization':organization,
-            'error_message': "Please enter at least one category.",
-        })
+            if category_id != None:
+                parent = get_object_or_404(Categories,pk=category_id)
+            else:
+                parent = request.POST.get('parent_branch',False)
+
+            # create the category, add the creator to the members list, and make the creator a moderator
+            category = Categories.objects.create(organization = organization,parent=parent,category_name=formatedCategoryName,closed_category = closedCategory,gateKeeper=gate_keeper)
+            category.members.add(request.user)
+            category.moderators.add(request.user)
+            return HttpResponseRedirect(reverse('org_home:categories', args=(organization.id,)))
+        else:
+            return render(request, 'org_home/newCategory.html', {
+                'organization':organization,
+                'error_message': "Please enter at least one category.",
+            })
 
 # list of all members in a category
 @login_required

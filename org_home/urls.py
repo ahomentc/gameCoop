@@ -8,7 +8,9 @@ urlpatterns = [
 
     url(r'^(?P<organization_id>\d+)/categories$', views.CategoryView, name='categories'),
     url(r'^(?P<organization_id>\d+)/newCategory.html$',views.newCategoryView,name='newCategory'),
+    url(r'^(?P<organization_id>\d+)/(?P<category_id>\d+)/newCategory.html$',views.newCategoryView,name='newSubCategory'),
     url(r'^(?P<organization_id>\d+)/submitNewCategory$',views.submitNewCategory,name='submitNewCategory'),
+    url(r'^(?P<organization_id>\d+)/(?P<category_id>\d+)/submitNewCategory$',views.submitNewCategory,name='submitNewSubCategory'),
 
     url(r'^(?P<organization_id>\d+)/(?P<category_id>\d+)/$', views.IndividualCategoryView, name='individualCategory'),
     url(r'^(?P<organization_id>\d+)/(?P<category_id>\d+)/joinCategory$', views.JoinCategory, name='joinCategory'),

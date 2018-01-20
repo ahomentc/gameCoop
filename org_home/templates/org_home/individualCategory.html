@@ -1,50 +1,45 @@
-{% include "home/base.html"  %}
-<br/><br/>
-{% include "org_home/base.html" with organization=organization %}
-
-{% block content %}
 {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'org_home/style.css' %}" />
 
-<h2>{{ category.category_name }}</h2>
-<!--if user not part of this then show join-->
-<!--or else don't show work or polls and maybe even discussion-->
-{% if user in category.members.all %}
-    <a style="text-decoration:none;" href="{% url 'org_work:index' organization.id category.id %}">Work</a><br/>
-    <a style="text-decoration:none;" href="{% url 'vote:index' organization.id category.id %}">Polls</a><br/>
-    <a style="text-decoration:none;" href="{% url 'discuss:Index' organization.id category.id %}">Discuss</a><br/>
-    <a style="text-decoration:none;" href="">Info</a><br/>
-    {% if user in category.moderators.all %}
-        <a style="text-decoration:none;" href="">Moderator Access</a><br/>
-    {% endif %}
-    {% if category.closed_category %}
-        <a style="text-decoration:none;" href="{% url 'org_home:pendingMembersView' organization.id category.id %}">Pending Members</a><br/>
-    {% endif %}
-{% endif %}
+<article>
+    {% include "org_home/base.html" with organization=organization categories_list=categories_list %}
 
-{% if user in category.pending_members.all %}
-    <p>Pending membership</p>
-{% endif %}
+    {% block content %}
+    <main>
+        <h2>{{ category.category_name }}</h2>
+        <!--if user not part of this then show join-->
+        <!--or else don't show work or polls and maybe even discussion-->
+        {% if user in category.members.all %}
+            <a style="text-decoration:none;" href="{% url 'org_work:index' organization.id category.id %}">Work</a><br/>
+            <a style="text-decoration:none;" href="{% url 'vote:index' organization.id category.id %}">Polls</a><br/>
+            <a style="text-decoration:none;" href="{% url 'discuss:Index' organization.id category.id %}">Discuss</a><br/>
+            <a style="text-decoration:none;" href="">Info</a><br/>
+            {% if user in category.moderators.all %}
+                <a style="text-decoration:none;" href="">Moderator Access</a><br/>
+            {% endif %}
+            {% if category.closed_category %}
+                <a style="text-decoration:none;" href="{% url 'org_home:pendingMembersView' organization.id category.id %}">Pending Members</a><br/>
+            {% endif %}
+        {% endif %}
 
-{% if user not in category.members.all %}
-    <a style="text-decoration:none;" href="{% url 'org_home:joinCategory' organization.id category.id %}">Join</a><br/>
-    <a style="text-decoration:none;" href="">Info</a><br/>
-{% endif %}
+        {% if user in category.pending_members.all %}
+            <p>Pending membership</p>
+        {% endif %}
 
-<a style="text-decoration:none;" href="{% url 'org_home:membersView' organization.id category.id %}">Members</a>
+        {% if user not in category.members.all %}
+            <a style="text-decoration:none;" href="{% url 'org_home:joinCategory' organization.id category.id %}">Join</a><br/>
+            <a style="text-decoration:none;" href="">Info</a><br/>
+        {% endif %}
 
-<h2>Sub Branches:</h2>
-{% if subCategories %}
-    {% for cat in subCategories %}
-        <br/><a style="text-decoration:none;" href="{% url 'org_home:individualCategory' organization.id cat.id %}"> {{ cat }} </a>
-    {% endfor %}
-    <br/><a style = "text-decoration:none" href="{% url 'org_home:newSubCategory' organization.id category.id %}">New Sub Branch</a>
-{% else %}
-    <a style = "text-decoration:none" href="{% url 'org_home:newSubCategory' organization.id category.id %}">Create the First Sub Branch</a>
-{% endif %}
+        <a style="text-decoration:none;" href="{% url 'org_home:membersView' organization.id category.id %}">Members</a>
+
+        <br/><a style = "text-decoration:none" href="{% url 'org_home:newSubCategory' organization.id category.id %}">New Sub Branch</a>
 
 
-<h2>Activity Feed</h2>
-<a href="">Jared changed the logo</a> <a href="">Yay</a> <a href="">Nay</a> <a href="">Discuss</a>
 
+        <h2>Activity Feed</h2>
+        <a href="">Jared changed the logo</a> <a href="">Yay</a> <a href="">Nay</a> <a href="">Discuss</a>
 
-{% endblock %}
+    </main>
+    {% endblock %}
+</article>

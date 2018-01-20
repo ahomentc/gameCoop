@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html>
   <body>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home/style.css' %}" />
+
     {% block body %}
-
-    {% if organization_id != "" %}
-    <a style="text-decoration:none" href = "{% url 'home:index' %}">Home |</a>
-    <a style="text-decoration:none" href = "{% url 'home:organizations' %}">Organizations |</a>
-    {% endif %}
-	{% if user.is_authenticated %}
-    <a style="text-decoration:none" href = "/user_profiles/profile">Profile |</a>
-	<a style="text-decoration:none" href="{% url 'account_logout' %}">Sign Out</a>
-	{% else %}
-	<a style="text-decoration:none" href="{% url 'account_login' %}">Sign In |</a>
-	<a style="text-decoration:none" href="{% url 'account_signup' %}">Sign Up</a>
-	{% endif %}
-
+    <div style="background-color: #F0F0F2;padding: 20px;">
+        {% if organization_id != "" %}
+        <a style="text-decoration:none" href = "{% url 'home:index' %}">GroupRoots |</a>
+        <a style="text-decoration:none" href = "{% url 'home:organizations' %}">Organizations |</a>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <a style="text-decoration:none" href = "/user_profiles/profile">Profile |</a>
+        <a style="text-decoration:none" href="{% url 'account_logout' %}">Sign Out</a>
+        {% else %}
+        <a style="text-decoration:none" href="{% url 'account_login' %}">Sign In |</a>
+        <a style="text-decoration:none" href="{% url 'account_signup' %}">Sign Up</a>
+        {% endif %}
+    </div>
     {% block content %}
     {% endblock %}
     {% endblock %}

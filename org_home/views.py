@@ -19,7 +19,8 @@ from .forms import ParentCategories
 def IndexView(request,organization_id):
     organization = get_object_or_404(Organizations,pk=organization_id)
     return render(request, 'org_home/index.html',{'organization': organization,'member_categories_list': Categories.objects.filter(
-        members__id=request.user.id,organization=organization)
+        members__id=request.user.id,organization=organization),
+        'categories_list':Categories.objects.filter(organization=organization)
     })
 
 # list of all the categories/root/branch in a coop
@@ -34,7 +35,8 @@ def IndividualCategoryView(request,organization_id,category_id):
     organization = get_object_or_404(Organizations,id=organization_id)
     category = get_object_or_404(Categories,pk=category_id)
     subCategories = Categories.objects.filter(parent=category)
-    return render(request,'org_home/individualCategory.html',{'organization':organization,'category': category,'subCategories':subCategories})
+    return render(request,'org_home/individualCategory.html',{'organization':organization,'category': category,'subCategories':subCategories,
+        'categories_list':Categories.objects.filter(organization=organization)})
 
 # page to create a new category/root/branch
 @login_required
@@ -46,10 +48,10 @@ def newCategoryView(request,organization_id,category_id=None):
         category = None
     form = ParentCategories()
     parentsList = [("None","None")]
-    for cat in Categories.objects.filter(organization=organization,parent = category):
+    for cat in Categories.objects.filter(organization=organization,parent=category):
         parentsList.append((cat.category_name,cat.category_name))
-    form.fields['parent_branch'].choices = parentsList
-    return render(request, 'org_home/newCategory.html',{'organization':organization,'category':category,'form':form})
+    return render(request, 'org_home/newCategory.html',{'organization':organization,'category':category,
+                                                        'categories_list':Categories.objects.filter(organization=organization)})
 
 # submit a new category
 @login_required
@@ -66,7 +68,7 @@ def submitNewCategory(request,organization_id,category_id=None):
                 # or the moderator. access is the name of the radio field
                 gate_keeper = request.POST['access']
 
-            categoryName =  request.POST['new_category']
+            categoryName = request.POST['new_category']
             # first word in category name uppercased
             formatedCategoryName = ' '.join(word[0].upper() + word[1:] for word in categoryName.split())
 
@@ -74,16 +76,22 @@ def submitNewCategory(request,organization_id,category_id=None):
             if Categories.objects.filter(category_name=formatedCategoryName).exists():
                 return render(request, 'org_home/newCategory.html', {'organization':organization,'error_message': formatedCategoryName + " already exists.",})
 
-            if category_id != None:
-                parent = get_object_or_404(Categories,pk=category_id)
-            else:
-                parent = request.POST.get('parent_branch',False)
+            parent = None
+
+            if 'parent' in request.POST and request.POST['parent'] != "-1":
+                parent = get_object_or_404(Categories,pk=int(request.POST['parent']))
 
             # create the category, add the creator to the members list, and make the creator a moderator
-            category = Categories.objects.create(organization = organization,parent=parent,category_name=formatedCategoryName,closed_category = closedCategory,gateKeeper=gate_keeper)
-            category.members.add(request.user)
-            category.moderators.add(request.user)
-            return HttpResponseRedirect(reverse('org_home:categories', args=(organization.id,)))
+            if parent == None or gate_keeper == '' or (gate_keeper == "all_members" and request.user in parent.members.all()) or (gate_keeper == "moderators" and request.user in parent.moderators.all()):
+                category = Categories.objects.create(organization=organization,parent=parent,category_name=formatedCategoryName,closed_category = closedCategory,gateKeeper=gate_keeper)
+                category.members.add(request.user)
+                category.moderators.add(request.user)
+                return HttpResponseRedirect(reverse('org_home:individualCategory', args=(organization.id,category.id)))
+            else:
+                return render(request, 'org_home/newCategory.html', {
+                'organization':organization,
+                'error_message': "You do not have permission to make new " + parent.category_name + " branch",
+            })
         else:
             return render(request, 'org_home/newCategory.html', {
                 'organization':organization,

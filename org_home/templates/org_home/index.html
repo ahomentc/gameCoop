@@ -1,23 +1,29 @@
-{% include "home/base.html"  %}
-<br/><br/>
-{% include "org_home/base.html" with organization=organization %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'org_home/style.css' %}" />
+
+<article>
+{% include "org_home/base.html" with organization=organization categories_list=categories_list %}
 
 {% block content %}
-<h1>{{ organization }}</h1>
-<p>------------------------</p>
 
-{% if user.is_authenticated %}
-{% if member_categories_list %}
-<h3> Your branches:</h3>
-    <ul>
-    {% for category in member_categories_list %}
-        <li> <a style="text-decoration:none;" href="{% url 'org_home:individualCategory' organization.id category.id %}"> {{ category }} </a> </li>
-    {% endfor %}
-    </ul>
-{% endif %}
-<p>------------------------</p>
-{% endif %}
+<main>
+    <h1>{{ organization }}</h1>
+    <p>------------------------</p>
 
-<a href = "{% url 'org_struct:index' organization.id %}">Organizational Structure</a><br/>
+    {% if user.is_authenticated %}
+    {% if member_categories_list %}
+    <h3> Your branches:</h3>
+        <ul>
+        {% for category in member_categories_list %}
+            <li> <a style="text-decoration:none;" href="{% url 'org_home:individualCategory' organization.id category.id %}"> {{ category }} </a> </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    <p>------------------------</p>
+    {% endif %}
+
+    <a href = "{% url 'org_struct:index' organization.id %}">Organizational Structure</a><br/>
+</main>
 
 {% endblock %}
+</article>

@@ -26,25 +26,32 @@ function addChoice(divName){
     }
 </script>
 
-{% include "home/base.html"  %}
-<br/><br/>
-{% include "org_home/base.html" with organization=organization %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'org_home/style.css' %}" />
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<article>
+{% include "org_home/base.html" with organization=organization categories_list=categories_list %}
 
-<!--Form with 1 question and a minimum of two choices. Is sent to the submitNewPoll View-->
+{% block content %}
+    <main>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<form action="{% url 'vote:submitNewPoll' organization.id category.id %}" method="post">
-{% csrf_token %}
-    <h1>Create a new Poll</h1>
-    <div id="forms">
-        <label>Question: </label>
-        <input type="text" name="question" id="question"/><br/>
-        <label>Choice 1: </label>
-        <input type="text" name="choice_1" id="choice_1"/><br/>
-        <label>Choice 2: </label>
-        <input type="text" name="choice_2" id="choice_2" onkeydown="addChoice('forms')"/>
-    </div>
-    <!--<input type="button" onclick="addChoice('forms')" value="Add Choice"/>-->
-    <input type="submit" value="Submit"/>
-</form>
+        <!--Form with 1 question and a minimum of two choices. Is sent to the submitNewPoll View-->
+
+        <form action="{% url 'vote:submitNewPoll' organization.id category.id %}" method="post">
+        {% csrf_token %}
+            <h1>Create a new Poll</h1>
+            <div id="forms">
+                <label>Question: </label>
+                <input type="text" name="question" id="question"/><br/>
+                <label>Choice 1: </label>
+                <input type="text" name="choice_1" id="choice_1"/><br/>
+                <label>Choice 2: </label>
+                <input type="text" name="choice_2" id="choice_2" onkeydown="addChoice('forms')"/>
+            </div>
+            <!--<input type="button" onclick="addChoice('forms')" value="Add Choice"/>-->
+            <input type="submit" value="Submit"/>
+        </form>
+    </main>
+{% endblock %}
+</article>

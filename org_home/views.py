@@ -98,6 +98,8 @@ def submitNewCategory(request,organization_id,category_id=None):
                 'error_message': "Please enter at least one category.",
             })
 
+# category access #
+
 # list of all members in a category
 @login_required
 def membersView(request,organization_id,category_id):
@@ -129,7 +131,7 @@ def JoinCategory(request,organization_id,category_id):
         category.pending_members.add(request.user)
     return HttpResponseRedirect(reverse('org_home:individualCategory', args=(organization.id,category.id,)))
 
-# grant access to someone to become a member
+# grant access to someone to become a member of a category
 @login_required
 def GrantAccess(request,organization_id,category_id,pending_member_id):
     organization = get_object_or_404(Organizations,id=organization_id)
@@ -149,3 +151,53 @@ def GrantAccess(request,organization_id,category_id,pending_member_id):
         else:
             return render(request,'org_home/pendingMembers.html',{'organization':organization,'category': category,'error_message':'Must be a moderator to add user to ' +  category.category_name })
     return HttpResponseRedirect(reverse('org_home:pendingMembersView', args=(organization.id,category.id,)))
+
+# organization access #
+
+# list of all members in an organization
+@login_required
+def orgMembersView(request,organization_id):
+    organization = get_object_or_404(Organizations,id=organization_id)
+    return render(request,'org_home/org_members.html',{'organization':organization,})
+
+# list of pending members in an organization
+@login_required
+def orgPendingMembersView(request,organization_id):
+    # this html is also called in GrantAccess
+    organization = get_object_or_404(Organizations,id=organization_id)
+    return render(request,'org_home/org_pending_members.html',{'organization':organization,})
+
+# join the organization
+@login_required
+def JoinOrganization(request,organization_id):
+    '''
+    if open organization, add user to members list of org
+    if closed org, add user to pending_members list of org
+    '''
+    organization = get_object_or_404(Organizations,id=organization_id)
+    # if org is open
+    if organization.closed_organization == False:
+        organization.members.add(request.user)
+    else:
+        organization.pending_members.add(request.user)
+    return HttpResponseRedirect(reverse('org_home:index', args=(organization.id,)))
+
+# grant access to someone to become a member of an organization
+@login_required
+def GrantAccessToOrg(request,organization_id,pending_member_id):
+    organization = get_object_or_404(Organizations,id=organization_id)
+    pending_member = User.objects.get(pk=pending_member_id)
+
+    # if any member can add pending members to category
+    if organization.gateKeeper == 'all_members':
+        if request.user in organization.members.all():
+            organization.members.add(pending_member)
+            organization.pending_members.remove(pending_member)
+    # if only moderator can add pending members to category
+    elif organization.gateKeeper == 'moderators':
+        if request.user in organization.moderators.all():
+            organization.members.add(pending_member)
+            organization.pending_members.remove(pending_member)
+        else:
+            return render(request,'org_home/org_pending_members.html',{'organization':organization,'error_message':'Must be a moderator to add user to ' +  organization })
+    return HttpResponseRedirect(reverse('org_home:orgPendingMembersView', args=(organization.id,)))

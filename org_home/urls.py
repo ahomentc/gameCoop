@@ -12,7 +12,15 @@ urlpatterns = [
     url(r'^(?P<organization_id>\d+)/submitNewCategory$',views.submitNewCategory,name='submitNewCategory'),
     url(r'^(?P<organization_id>\d+)/(?P<category_id>\d+)/submitNewCategory$',views.submitNewCategory,name='submitNewSubCategory'),
 
+    # access to organization
+    url(r'^(?P<organization_id>\d+)/joinOrganization$', views.JoinOrganization, name='joinOrganization'),
+    url(r'^(?P<organization_id>\d+)/orgMembers$', views.orgMembersView, name='orgMembersView'),
+    url(r'^(?P<organization_id>\d+)/pendingOrgMembers$', views.orgPendingMembersView, name='orgPendingMembersView'),
+    url(r'^(?P<organization_id>\d+)/(?P<pending_member_id>\d+)/grantOrgAccess$', views.GrantAccessToOrg, name='GrantOrgAccess'),
+
     url(r'^(?P<organization_id>\d+)/(?P<category_id>\d+)/$', views.IndividualCategoryView, name='individualCategory'),
+
+    # access to category
     url(r'^(?P<organization_id>\d+)/(?P<category_id>\d+)/joinCategory$', views.JoinCategory, name='joinCategory'),
     url(r'^(?P<organization_id>\d+)/(?P<category_id>\d+)/members$', views.membersView, name='membersView'),
     url(r'^(?P<organization_id>\d+)/(?P<category_id>\d+)/pendingMembers$', views.pendingMembersView, name='pendingMembersView'),

@@ -44,7 +44,8 @@ def IndexView(request,organization_id,category_id):
         'category': category,
         'latest_question_list': Question.objects.filter(
             pub_date__lte=timezone.now(),category = category
-        ).order_by('-pub_date')[:5]
+        ).order_by('-pub_date')[:5],
+        'categories_list':Categories.objects.filter(organization=organization)
     })
 
 # shows the options to vote on for a specific poll. Can vote here too.
@@ -58,7 +59,8 @@ def DetailView(request,organization_id,category_id,question_id):
         'organization':organization,
         'category': category,
         'question':question,
-        'choice_set':Question.objects.filter(pub_date__lte=timezone.now())
+        'choice_set':Question.objects.filter(pub_date__lte=timezone.now()),
+        'categories_list':Categories.objects.filter(organization=organization)
     })
 
 # shows the results of the vote so far
@@ -75,6 +77,7 @@ def ResultsView(request,organization_id,category_id,question_id):
         'question':question,
         'choice_set':Question.objects.filter(pub_date__lte=timezone.now()),
         'percent_voted':percentVoted,
+        'categories_list':Categories.objects.filter(organization=organization)
     })
 
 # submit a vote
@@ -120,7 +123,7 @@ def vote(request,organization_id,category_id,question_id):
 def newPollView(request,organization_id,category_id):
     organization = get_object_or_404(Organizations,pk=organization_id)
     category = get_object_or_404(org_home_models.Categories,pk=category_id)
-    return render(request, 'vote/newPoll.html',{'organization':organization,'category':category})
+    return render(request, 'vote/newPoll.html',{'organization':organization,'category':category,'categories_list':Categories.objects.filter(organization=organization)})
 
 @is_member
 @login_required
@@ -141,5 +144,6 @@ def submitNewPoll(request,organization_id,category_id):
         return render(request, 'vote/newPoll.html', {
             'organization':organization,
             'error_message': "Please enter a question and a two choices",
-            'category': category
+            'category': category,
+            'categories_list':Categories.objects.filter(organization=organization)
         })

@@ -1,23 +1,30 @@
-{% include "home/base.html"  %}
-<br/><br/>
-{% include "org_home/base.html" with organization=organization %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'org_home/style.css' %}" />
 
-<br/><br/><a href = "{% url 'vote:index' organization.id category.id %}">< Back to {{ category }} polls</a><br/>
+<article>
+{% include "org_home/base.html" with organization=organization categories_list=categories_list %}
 
-<h1>{{ question.question_text }}</h1>
+{% block content %}
+    <main>
+        <br/><br/><a href = "{% url 'vote:index' organization.id category.id %}">< Back to {{ category }} polls</a><br/>
 
-{{ error_message }}
+        <h1>{{ question.question_text }}</h1>
 
-{% if question.voters.all.count == 1 %}
-    <p>{{ question.voters.all.count }} member voted</p>
-{% else %}
-    <p>{{ question.voters.all.count }} members voted</p>
-{% endif %}
-<p>{{ percent_voted }}% of members voted</p><br/>
+        {{ error_message }}
+
+        {% if question.voters.all.count == 1 %}
+            <p>{{ question.voters.all.count }} member voted</p>
+        {% else %}
+            <p>{{ question.voters.all.count }} members voted</p>
+        {% endif %}
+        <p>{{ percent_voted }}% of members voted</p><br/>
 
 
-<ul>
-{% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
-{% endfor %}
-</ul>
+        <ul>
+        {% for choice in question.choice_set.all %}
+            <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+        {% endfor %}
+        </ul>
+    </main>
+{% endblock %}
+</article>

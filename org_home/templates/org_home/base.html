@@ -8,11 +8,15 @@
     {% include "home/base.html"  %}<br/><br/>
     </header>
     <aside>
+        <a style="display:block; font-size:30; text-align:center; text-decoration:none " href = "{% url 'home:index' %}">Group Roots</a><br/><br/><br/>
+
+
         {% if organization_id != "" %}
-        <a style="text-decoration:none" href = "{% url 'org_home:index' organization.id %}">{{ organization }}</a>
+        <a style="display:block; text-align:center; font-size: 25; text-decoration:none;" href = "{% url 'org_home:index' organization.id %}">{{ organization }}</a>
         <br/><br/>
         {% endif %}
 
+        <label style="display:block; font-size: 20; text-align:center;">Branches</label>
         <script>
             function addExpandButton(id,name){
                 subCategories = subCategoriesAndId(name);
@@ -48,12 +52,12 @@
                         url = "{% url 'org_home:individualCategory' organization_id=organization.id category_id=123 %}".replace("123", subCategoryIdList[c]);
                         if (subCategoriesAndId(name)[0].length != 0){
                             newdiv.innerHTML += "<div style='margin-left:15px' id=" + id + ">\
-                            <a style='text-decoration:none' href = " +  url + " >" + name + "</a>\
+                            <a style='margin-left: 20px; text-decoration:none' href = " +  url + " >" + name + "</a>\
                             <button id=\"exp" + id + "\" onclick=\"expand('" + id + "', '" + name + "')\">v</button></div>";
                         }
                         else{
                             newdiv.innerHTML += "<div style='margin-left:15px' id=" + id + ">\
-                            <a style='text-decoration:none' href = " +  url + " >" + name + "</a>";
+                            <a style='margin-left: 20px; text-decoration:none' href = " +  url + " >" + name + "</a>";
                         }
 
                     }
@@ -73,7 +77,7 @@
             {% for category in categories_list %}
                 {% if category.parent == None %}
                     <div id= {{ category.id }}>
-                        <a style='text-decoration:none' href="{% url 'org_home:individualCategory' organization.id category.id %}"> {{ category }} </a>
+                        <a style='margin-left: 20px; text-decoration:none' href="{% url 'org_home:individualCategory' organization.id category.id %}"> {{ category }} </a>
                         <script>addExpandButton('{{ category.id }}', '{{ category }}');</script>
                     </div>
                 {% endif %}
@@ -82,7 +86,8 @@
             <p>No categories are available.</p>
         {% endif %}
 
-        <a style='text-decoration:none' href = "{% url 'org_home:newCategory' organization.id %}">Create New Branch</a>
+        <br/>
+        <a style='margin-left: 20px; text-decoration:none' href = "{% url 'org_home:newCategory' organization.id %}">Create New Branch</a>
 
 
         {% endblock %}

@@ -2,27 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9ce08e88-6b8e-447c-9f78-c4ca2f898735" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/discuss/static/discuss/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gameCoop/gameCoopRepo" afterPath="$PROJECT_DIR$/gameCoop/gameCoopRepo" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/discuss/templates/discuss/base.html" afterPath="$PROJECT_DIR$/discuss/templates/discuss/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/discuss/templates/discuss/ideaDiscussion.html" afterPath="$PROJECT_DIR$/discuss/templates/discuss/ideaDiscussion.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/discuss/templates/discuss/index.html" afterPath="$PROJECT_DIR$/discuss/templates/discuss/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/discuss/templates/discuss/individualPost.html" afterPath="$PROJECT_DIR$/discuss/templates/discuss/individualPost.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/discuss/templates/discuss/votingDiscussion.html" afterPath="$PROJECT_DIR$/discuss/templates/discuss/votingDiscussion.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/discuss/views.py" afterPath="$PROJECT_DIR$/discuss/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/home/templates/home/index.html" afterPath="$PROJECT_DIR$/home/templates/home/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org_home/static/org_home/style.css" afterPath="$PROJECT_DIR$/org_home/static/org_home/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org_home/templates/org_home/base.html" afterPath="$PROJECT_DIR$/org_home/templates/org_home/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org_home/templates/org_home/index.html" afterPath="$PROJECT_DIR$/org_home/templates/org_home/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org_home/templates/org_home/individualCategory.html" afterPath="$PROJECT_DIR$/org_home/templates/org_home/individualCategory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org_home/templates/org_home/members.html" afterPath="$PROJECT_DIR$/org_home/templates/org_home/members.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org_home/templates/org_home/pendingMembers.html" afterPath="$PROJECT_DIR$/org_home/templates/org_home/pendingMembers.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vote/static/vote/style.css" afterPath="$PROJECT_DIR$/vote/static/vote/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vote/templates/vote/detail.html" afterPath="$PROJECT_DIR$/vote/templates/vote/detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vote/templates/vote/index.html" afterPath="$PROJECT_DIR$/vote/templates/vote/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vote/templates/vote/newPoll.html" afterPath="$PROJECT_DIR$/vote/templates/vote/newPoll.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vote/templates/vote/results.html" afterPath="$PROJECT_DIR$/vote/templates/vote/results.html" />
     </list>
     <ignored path="settings.py" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,9 +20,24 @@
       <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/org_home/static/org_home/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="565">
-              <caret line="64" column="1" lean-forward="true" selection-start-line="64" selection-start-column="1" selection-end-line="64" selection-end-column="1" />
+            <state relative-caret-position="580">
+              <caret line="53" column="7" lean-forward="true" selection-start-line="53" selection-start-column="7" selection-end-line="53" selection-end-column="7" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/org_home/templates/org_home/base.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="358">
+              <caret line="77" column="65" lean-forward="false" selection-start-line="77" selection-start-column="65" selection-end-line="77" selection-end-column="65" />
+              <folding>
+                <element signature="n#style#0;n#a#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -85,21 +83,6 @@
                 <element signature="n#style#0;n#p#1;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#p#2;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#img#0;n#a#1;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/org_home/templates/org_home/base.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="25" column="136" lean-forward="false" selection-start-line="25" selection-start-column="136" selection-end-line="25" selection-end-column="136" />
-              <folding>
-                <element signature="n#style#0;n#a#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -198,8 +181,8 @@
         <option value="$PROJECT_DIR$/home/templates/home/index.html" />
         <option value="$PROJECT_DIR$/vote/templates/vote/index.html" />
         <option value="$PROJECT_DIR$/discuss/templates/discuss/individualPost.html" />
-        <option value="$PROJECT_DIR$/org_home/templates/org_home/base.html" />
         <option value="$PROJECT_DIR$/org_home/templates/org_home/individualCategory.html" />
+        <option value="$PROJECT_DIR$/org_home/templates/org_home/base.html" />
         <option value="$PROJECT_DIR$/org_home/static/org_home/style.css" />
       </list>
     </option>
@@ -799,6 +782,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/vote/templates/vote/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/discuss/templates/discuss/individualPost.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="79">
@@ -823,10 +814,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/org_home/templates/org_home/individualCategory.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="32" column="17" lean-forward="false" selection-start-line="32" selection-start-column="17" selection-end-line="32" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/org_home/templates/org_home/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="25" column="136" lean-forward="false" selection-start-line="25" selection-start-column="136" selection-end-line="25" selection-end-column="136" />
+        <state relative-caret-position="358">
+          <caret line="77" column="65" lean-forward="false" selection-start-line="77" selection-start-column="65" selection-end-line="77" selection-end-column="65" />
           <folding>
             <element signature="n#style#0;n#a#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -836,26 +835,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vote/templates/vote/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org_home/templates/org_home/individualCategory.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" column="17" lean-forward="false" selection-start-line="32" selection-start-column="17" selection-end-line="32" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/org_home/static/org_home/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="565">
-          <caret line="64" column="1" lean-forward="true" selection-start-line="64" selection-start-column="1" selection-end-line="64" selection-end-column="1" />
+        <state relative-caret-position="580">
+          <caret line="53" column="7" lean-forward="true" selection-start-line="53" selection-start-column="7" selection-end-line="53" selection-end-column="7" />
           <folding />
         </state>
       </provider>

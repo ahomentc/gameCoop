@@ -28,14 +28,14 @@
     <aside>
         {% if organization_id != "" %}
         <a style="display:block; text-align:center; font-size: 25; text-decoration:none;" href = "{% url 'org_home:index' organization.id %}">{{ organization }}</a>
-        <br/><br/>
+        <br/>
         {% endif %}
 
         <script>
             function addExpandButton(id,name){
                 subCategories = subCategoriesAndId(name);
                 if (subCategoriesAndId(name)[0].length != 0){
-                    document.getElementById(id).innerHTML += "<button id=\"exp" + id + "\" onclick=\"expand('" + id + "', '" + name + "')\">></button></div>";
+                    document.getElementById(id).innerHTML += "<button class='expandButton' id=\"exp" + id + "\" onclick=\"expand('" + id + "', '" + name + "')\">></button></div>";
                 }
             }
             function subCategoriesAndId(parent_name){
@@ -67,7 +67,7 @@
                         if (subCategoriesAndId(name)[0].length != 0){
                             newdiv.innerHTML += "<div style='margin-left:15px' id=" + id + ">\
                             <a style='margin-left: 20px; text-decoration:none' href = " +  url + " >" + name + "</a>\
-                            <button id=\"exp" + id + "\" onclick=\"expand('" + id + "', '" + name + "')\">></button></div>";
+                            <button class='expandButton' id=\"exp" + id + "\" onclick=\"expand('" + id + "', '" + name + "')\">></button></div>";
                         }
                         else{
                             newdiv.innerHTML += "<div style='margin-left:15px' id=" + id + ">\
@@ -75,7 +75,7 @@
                         }
 
                     }
-                    document.getElementById(divName).innerHTML += "<input id='closeButton" + divName + "' type=button value='v' onclick=\"contract('" + divName + "')\"/>";
+                    document.getElementById(divName).innerHTML += "<input class='expandButton' id='closeButton" + divName + "' type=button value='v' onclick=\"contract('" + divName + "')\"/>";
                     document.getElementById(divName).appendChild(newdiv);
                     document.getElementById("exp" + divName).style.display='none';
                     }
@@ -87,7 +87,7 @@
                 }
         </script>
 
-        <label style="display:block; font-size: 20; text-align:center;">Branches<button id="exp" onclick="expand('id')">v</button></label>
+        <!--<label style="display:block; font-size: 20; text-align:center;">Branches<button id="exp" onclick="expand('id')">v</button></label>-->
         {% if categories_list %}
             {% for category in categories_list %}
                 {% if category.parent == None %}

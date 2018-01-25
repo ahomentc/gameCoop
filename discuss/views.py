@@ -22,7 +22,8 @@ def Index(request,organization_id,category_id):
         ).order_by('-pub_date')[:10]
     if len(generalPostsList) == 0:
         no_posts_message = "No posts here yet"
-    return render(request,'discuss/index.html',{'organization':organization,'category': category,'postsList':generalPostsList,'no_posts_message':no_posts_message})
+    return render(request,'discuss/index.html',{'organization':organization,'category': category,'postsList':generalPostsList,'no_posts_message':no_posts_message,
+                                                'categories_list':Categories.objects.filter(organization=organization)})
 
 # the "idea" discussions
 def IdeaDiscussion(request,organization_id,category_id):
@@ -35,7 +36,8 @@ def IdeaDiscussion(request,organization_id,category_id):
         ).order_by('-pub_date')[:10]
     if len(ideaPostsList) == 0:
         no_posts_message = "No posts here yet"
-    return render(request,'discuss/ideaDiscussion.html',{'organization':organization,'category': category,'postsList':ideaPostsList,'no_posts_message':no_posts_message})
+    return render(request,'discuss/ideaDiscussion.html',{'organization':organization,'category': category,'postsList':ideaPostsList,'no_posts_message':no_posts_message,
+                                                         'categories_list':Categories.objects.filter(organization=organization)})
 
 # the "voting" discussion
 def VotingDiscussion(request,organization_id,category_id):
@@ -48,7 +50,8 @@ def VotingDiscussion(request,organization_id,category_id):
         ).order_by('-pub_date')[:10]
     if len(votingPostsList) == 0:
         no_posts_message = "No posts here yet"
-    return render(request,'discuss/ideaDiscussion.html',{'organization':organization,'category': category,'postsList':votingPostsList,'no_posts_message':no_posts_message})
+    return render(request,'discuss/ideaDiscussion.html',{'organization':organization,'category': category,'postsList':votingPostsList,'no_posts_message':no_posts_message,
+                                                         'categories_list':Categories.objects.filter(organization=organization)})
 
 # page to create a new Post
 def newPostView(request,organization_id,category_id):
@@ -131,7 +134,8 @@ def IndividualPost(request,organization_id,category_id,post_id):
 
 
     form = newMainReply()
-    return render(request,'discuss/individualPost.html',{'organization':organization,'category':category,'post':post,'form':form,'repliesDict':sortedDict})
+    return render(request,'discuss/individualPost.html',{'organization':organization,'category':category,'post':post,'form':form,'repliesDict':sortedDict,
+                                                         'categories_list':Categories.objects.filter(organization=organization)})
 
 # submit a reply
 def submitReply(request,organization_id,category_id,post_id,parent_id=None):

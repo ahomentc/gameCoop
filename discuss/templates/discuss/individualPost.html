@@ -1,87 +1,97 @@
-{% include "home/base.html"  %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'org_home/style.css' %}" />
+
+<article>
+{% include "org_home/base.html" with organization=organization category=category categories_list=categories_list %}
 
 {% block content %}
+<main>
+    {% if post.discussionType == 'General' %}
+        <br/><br/><a href="{% url 'discuss:Index' organization.id category.id %}"> < {{ category }} General</a>
+    {% elif post.discussionType == 'Idea' %}
+        <br/><br/><a href="{% url 'discuss:IdeaDiscussion' organization.id category.id %}"> < {{ category }} Ideas</a>
+    {% elif post.discussionType == 'Voting' %}
+        <br/><br/><a href="{% url 'discuss:VotingDiscussion' organization.id category.id %}"> < {{ category }} Decisions</a>
+    {% endif %}
 
-{% if post.discussionType == 'General' %}
-    <br/><br/><a href="{% url 'discuss:Index' organization.id category.id %}"> < {{ category }} General</a>
-{% elif post.discussionType == 'Idea' %}
-    <br/><br/><a href="{% url 'discuss:IdeaDiscussion' organization.id category.id %}"> < {{ category }} Ideas</a>
-{% elif post.discussionType == 'Voting' %}
-    <br/><br/><a href="{% url 'discuss:VotingDiscussion' organization.id category.id %}"> < {{ category }} Decisions</a>
-{% endif %}
+    <h3 style="height:2px">{{ post.title }}</h3>
 
-<h3 style="height:2px">{{ post.title }}</h3>
-
-<div>
-    <p style="color:grey; height:4px">submitted by <a href="">{{ post.original_poster }}</a></p>
-    <div style="background-color: #F8F7F7; border-radius: 8px; padding:0px; width:600px">
-        <p style="padding:10px">{{ post.content }}</p>
-    </div>
-    <a href=""><img border="0" src="https://i.imgur.com/3Pey35k.png" width="12" height="12"/></a>
-    <a href=""><img style="padding-left:5px; padding-bottom:0px" border="0" src="https://i.imgur.com/G008NCi.png" width="12" height="12"/></a>
-    <form action="{% url 'discuss:submitReply' organization.id category.id post.id %}" method="post">
-    {% csrf_token %}
-        {{ form }}
-    <br/><input type="submit" value="Submit" />
-    </form>
-</div>
-
-<!--do this stuff in ajax so the page doesn't refresh-->
-
-{% for key,valuesList in repliesDict.items %}
-    <div style="background-color: #F8F7F7; border-radius: 8px; padding:0px; width:600px">
-        <p style="height:4px; color:grey; padding-top:10px;padding-left:10px"> <a style="text-decoration:none" href="">{{ key.user }}</a> {{ key.pub_date|timesince }} ago</p>
-        <p style="padding-bottom:10px;padding-left:10px">{{ key.content }}
-        <br/><button onclick="expand('{{key.id}}')" style="background:none; border:none; padding-top:17px; padding-left:3px; cursor: pointer;">reply</button>
+    <div>
+        <p style="color:grey; height:4px">submitted by <a href="">{{ post.original_poster }}</a></p>
+        <div style="background-color: #F8F7F7; border-radius: 8px; padding:0px; width:100%">
+            <p style="padding:10px">{{ post.content }}</p>
+        </div>
         <a href=""><img border="0" src="https://i.imgur.com/3Pey35k.png" width="12" height="12"/></a>
         <a href=""><img style="padding-left:5px; padding-bottom:0px" border="0" src="https://i.imgur.com/G008NCi.png" width="12" height="12"/></a>
-        <form id={{key.id}} style="display:none" action="{% url 'discuss:submitSubReply' organization.id category.id post.id key.id %}" method="post">
-            {% csrf_token %}
+        <form action="{% url 'discuss:submitReply' organization.id category.id post.id %}" method="post">
+        {% csrf_token %}
             {{ form }}
-            <br/><input type="submit" value="Submit" /><button onclick="contract('{{key.id}}')">Cancel</button>
+        <br/><input type="submit" value="Submit" />
         </form>
     </div>
 
-    {% for item in valuesList %}
-        <div style="padding-left:40px">
-            <div style="background-color: #F8F7F7; border-radius: 8px; padding:0px; width:560px">
-                <p style="height:4px; color:grey; padding-top:10px;padding-left:10px"> <a style="text-decoration:none" href="">{{ item.user }}</a> {{ item.pub_date|timesince }} ago</p>
+    <!--do this stuff in ajax so the page doesn't refresh-->
+    <ul style="list-style: none; padding: 0;">
+        {% for key,valuesList in repliesDict.items %}
+            <li>
+                <div style="background-color: #F8F7F7; border-radius: 8px; padding:0px; width:100%">
+                    <p style="height:4px; color:grey; padding-top:10px;padding-left:10px"> <a style="text-decoration:none" href="">{{ key.user }}</a> {{ key.pub_date|timesince }} ago</p>
+                    <p style="padding-bottom:10px;padding-left:10px">{{ key.content }}
+                    <br/><button onclick="expandTextbox('{{key.id}}')" style="background:none; border:none; padding-top:17px; padding-left:3px; cursor: pointer;">reply</button>
+                    <a href=""><img border="0" src="https://i.imgur.com/3Pey35k.png" width="12" height="12"/></a>
+                    <a href=""><img style="padding-left:5px; padding-bottom:0px" border="0" src="https://i.imgur.com/G008NCi.png" width="12" height="12"/></a>
+                    <form id={{key.id}} style="display:none" action="{% url 'discuss:submitSubReply' organization.id category.id post.id key.id %}" method="post">
+                        {% csrf_token %}
+                        {{ form }}
+                        <br/><input type="submit" value="Submit" /><button onclick="contract('{{key.id}}')">Cancel</button>
+                    </form>
+                </div>
+            </li>
+            {% for item in valuesList %}
+                <li>
+                    <div style="padding-left:40px">
+                        <div style="background-color: #F8F7F7; border-radius: 8px; padding:0px; width:100%">
+                            <p style="height:4px; color:grey; padding-top:10px;padding-left:10px"> <a style="text-decoration:none" href="">{{ item.user }}</a> {{ item.pub_date|timesince }} ago</p>
 
-                {% if item.parent.parent != null %}
-                    <p style="padding-left:10px"><strong>@ {{ item.parent.user }}</strong>: {{ item.content }}</p>
-                {% else %}
-                    <p style="padding-left:10px">{{ item.content }}</p>
-                {% endif %}
+                            {% if item.parent.parent != null %}
+                                <p style="padding-left:10px"><strong>@ {{ item.parent.user }}</strong>: {{ item.content }}</p>
+                            {% else %}
+                                <p style="padding-left:10px">{{ item.content }}</p>
+                            {% endif %}
 
-                <button onclick="expand('{{item.id}}')" style="background:none; border:none;padding:0;cursor: pointer;padding-left:10px;padding:10px">reply</button>
+                            <button onclick="expandTextbox('{{item.id}}')" style="background:none; border:none;padding:0;cursor: pointer;padding-left:10px;padding:10px">reply</button>
 
-                {% if user.username == item.user %}
-                    <button style="background:none; border:none;padding:0;cursor: pointer;padding-left:10px;padding:10px">edit</button>
-                {% endif %}
+                            {% if user.username == item.user %}
+                                <button style="background:none; border:none;padding:0;cursor: pointer;padding-left:10px;padding:10px">edit</button>
+                            {% endif %}
 
-                <a href=""><img border="0" src="https://i.imgur.com/3Pey35k.png" width="12" height="12"/></a>
-                <a href=""><img style="padding-left:5px; padding-bottom:0px" border="0" src="https://i.imgur.com/G008NCi.png" width="12" height="12"/></a>
+                            <a href=""><img border="0" src="https://i.imgur.com/3Pey35k.png" width="12" height="12"/></a>
+                            <a href=""><img style="padding-left:5px; padding-bottom:0px" border="0" src="https://i.imgur.com/G008NCi.png" width="12" height="12"/></a>
 
-                <form id={{item.id}} style="display:none"action="{% url 'discuss:submitSubReply' organization.id category.id post.id item.id %}" method="post">
-                    {% csrf_token %}
-                    {{ form }}
-                    <br/><input type="submit" value="Submit" /><input type="button" value="Cancel" onclick="contract('{{item.id}}')"/>
-                </form>
-            </div>
-        </div>
-    {% endfor %}
-{% endfor %}
+                            <form id={{item.id}} style="display:none"action="{% url 'discuss:submitSubReply' organization.id category.id post.id item.id %}" method="post">
+                                {% csrf_token %}
+                                {{ form }}
+                                <br/><input type="submit" value="Submit" /><input type="button" value="Cancel" onclick="contractTextbox('{{item.id}}')"/>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+</main>
 
     <script>
-    function expand(item_id){
+    function expandTextbox(item_id){
         document.getElementById(item_id).style.display = 'block';
         }
 
-    function contract(item_id){
+    function contractTextbox(item_id){
         document.getElementById(item_id).style.display = 'none';
         }
 
     </script>
 
 {% endblock %}
+</article>
 

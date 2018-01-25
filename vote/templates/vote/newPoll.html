@@ -30,7 +30,7 @@ function addChoice(divName){
 <link rel="stylesheet" type="text/css" href="{% static 'org_home/style.css' %}" />
 
 <article>
-{% include "org_home/base.html" with organization=organization categories_list=categories_list %}
+{% include "org_home/base.html" with organization=organization category=category categories_list=categories_list %}
 
 {% block content %}
     <main>

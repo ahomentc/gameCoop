@@ -1,27 +1,41 @@
 <!DOCTYPE html>
 <html>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'org_home/style.css' %}" />
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'org_home/style.css' %}" />
   <body>
-    {% block body %}
     <header>
-    {% include "home/base.html"  %}<br/><br/>
+        {% include "home/base.html"  %}
     </header>
+
+    {% if category %}
+        <div id="navbar">
+            <a style="font-size: 29px; text-decoration:none;" href="{% url 'org_home:individualCategory' organization.id category.id %}">{{ category }}</a>
+            <label>  |  </label>
+            <!--if user not part of this then show join-->
+            <!--or else don't show work or polls and maybe even discussion-->
+            {% if user in category.members.all %}
+                <a style="text-decoration:none;" href="{% url 'org_work:index' organization.id category.id %}">Work</a>
+                <label>  |  </label>
+                <a style="text-decoration:none;" href="{% url 'vote:index' organization.id category.id %}">Polls</a>
+                <label>  |  </label>
+                <a style="text-decoration:none;" href="{% url 'discuss:Index' organization.id category.id %}">Discuss</a>
+            {% endif %}
+        </div>
+    {% endif %}
+    <div id="GroupRoots">
+        <a style="display:block; font-size:30; text-align:center; text-decoration:none " href = "{% url 'home:index' %}">Group Roots</a>
+    </div>
     <aside>
-        <a style="display:block; font-size:30; text-align:center; text-decoration:none " href = "{% url 'home:index' %}">Group Roots</a><br/><br/><br/>
-
-
         {% if organization_id != "" %}
         <a style="display:block; text-align:center; font-size: 25; text-decoration:none;" href = "{% url 'org_home:index' organization.id %}">{{ organization }}</a>
         <br/><br/>
         {% endif %}
 
-        <label style="display:block; font-size: 20; text-align:center;">Branches</label>
         <script>
             function addExpandButton(id,name){
                 subCategories = subCategoriesAndId(name);
                 if (subCategoriesAndId(name)[0].length != 0){
-                    document.getElementById(id).innerHTML += "<button id=\"exp" + id + "\" onclick=\"expand('" + id + "', '" + name + "')\">v</button></div>";
+                    document.getElementById(id).innerHTML += "<button id=\"exp" + id + "\" onclick=\"expand('" + id + "', '" + name + "')\">></button></div>";
                 }
             }
             function subCategoriesAndId(parent_name){
@@ -53,7 +67,7 @@
                         if (subCategoriesAndId(name)[0].length != 0){
                             newdiv.innerHTML += "<div style='margin-left:15px' id=" + id + ">\
                             <a style='margin-left: 20px; text-decoration:none' href = " +  url + " >" + name + "</a>\
-                            <button id=\"exp" + id + "\" onclick=\"expand('" + id + "', '" + name + "')\">v</button></div>";
+                            <button id=\"exp" + id + "\" onclick=\"expand('" + id + "', '" + name + "')\">></button></div>";
                         }
                         else{
                             newdiv.innerHTML += "<div style='margin-left:15px' id=" + id + ">\
@@ -61,7 +75,7 @@
                         }
 
                     }
-                    document.getElementById(divName).innerHTML += "<input id='closeButton" + divName + "' type=button value='^' onclick=\"contract('" + divName + "')\"/>";
+                    document.getElementById(divName).innerHTML += "<input id='closeButton" + divName + "' type=button value='v' onclick=\"contract('" + divName + "')\"/>";
                     document.getElementById(divName).appendChild(newdiv);
                     document.getElementById("exp" + divName).style.display='none';
                     }
@@ -73,6 +87,7 @@
                 }
         </script>
 
+        <label style="display:block; font-size: 20; text-align:center;">Branches<button id="exp" onclick="expand('id')">v</button></label>
         {% if categories_list %}
             {% for category in categories_list %}
                 {% if category.parent == None %}
@@ -85,14 +100,12 @@
         {% else %}
             <p>No categories are available.</p>
         {% endif %}
-
         <br/>
         <a style='margin-left: 20px; text-decoration:none' href = "{% url 'org_home:newCategory' organization.id %}">Create New Branch</a>
-
-
-        {% endblock %}
-        {% block extra_body %}
-        {% endblock %}
     </aside>
+    {% block body %}
+    {% endblock %}
+    {% block extra_body %}
+    {% endblock %}
   </body>
 </html>

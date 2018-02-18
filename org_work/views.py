@@ -19,12 +19,14 @@ from .forms import NewProjectForm
 def IndexView(request,organization_id,category_id):
     organization = get_object_or_404(Organizations,pk=organization_id)
     category = get_object_or_404(Categories,pk=category_id)
-    return render(request, 'org_work/index.html',{'organization': organization,'category':category})
+    return render(request, 'org_work/index.html',{'organization': organization,'category':category,
+                                                  'categories_list':Categories.objects.filter(organization=organization)})
 
 def ProjectView(request,organization_id,category_id):
     organization = get_object_or_404(Organizations,pk=organization_id)
     category = get_object_or_404(Categories,pk=category_id)
-    return render(request,'org_work/projects.html',{'organization': organization,'category':category})
+    return render(request,'org_work/projects.html',{'organization': organization,'category':category,
+                                                    'categories_list':Categories.objects.filter(organization=organization)})
 
 # def newCategoryView(request,organization_id):
 #     organization = get_object_or_404(Organizations,id=organization_id)

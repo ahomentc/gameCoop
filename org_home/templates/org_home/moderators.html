@@ -8,8 +8,8 @@
 <main>
 <br/><br/><a href = "{% url 'org_home:individualCategory' organization.id category.id %}">< Back to {{ category }} home</a><br/>
     <ul>
-    {% for member in category.members.all %}
-        <li>{{ member }}</li>
+    {% for mod in category.moderators.all %}
+        <li>{{ mod }}</li>
     {% endfor %}
     </ul>
 </main>

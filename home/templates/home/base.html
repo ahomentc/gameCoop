@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
   <body>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'home/style.css' %}" />
-
     {% block body %}
     <div style="float: right; padding: 20px;">
         {% if user.is_authenticated %}

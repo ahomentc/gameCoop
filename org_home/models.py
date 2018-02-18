@@ -12,6 +12,10 @@ class Categories(models.Model):
     pending_members = models.ManyToManyField(User,related_name='category_pending_member')
     members = models.ManyToManyField(User,related_name='category_member')
     moderators = models.ManyToManyField(User,related_name='category_super_member')
+
+    # when a parental moderator clicks join to the community, he becomes a regular moderator
+    parentalModerators = models.ManyToManyField(User,related_name='category_parental_mod')
+
     closed_category = models.BooleanField()
     gateKeeper = models.CharField(max_length=30) # either all_members or moderators
 

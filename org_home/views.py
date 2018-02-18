@@ -59,33 +59,48 @@ def submitNewCategory(request,organization_id,category_id=None):
     organization = get_object_or_404(Organizations,id=organization_id)
     if request.method == "POST":
         if 'new_category' in request.POST and request.POST['new_category'] != '':
+
+            # set access to category
             closedCategory = False
             gate_keeper = ''
-            # closed_category is a checkbox of if people need persmission to join the category
             if 'closed_category' in request.POST:
                 closedCategory = True
                 # gate_keeper is who can let people join the community. It can either be anyone in the community
                 # or the moderator. access is the name of the radio field
                 gate_keeper = request.POST['access']
 
+            # set category name
             categoryName = request.POST['new_category']
-            # first word in category name uppercased
             formatedCategoryName = ' '.join(word[0].upper() + word[1:] for word in categoryName.split())
-
             # returns error if the category name already exists
-            if Categories.objects.filter(category_name=formatedCategoryName).exists():
+            if Categories.objects.filter(organization=organization,category_name=formatedCategoryName).exists():
                 return render(request, 'org_home/newCategory.html', {'organization':organization,'error_message': formatedCategoryName + " already exists.",})
 
+            # set parent
             parent = None
-
             if 'parent' in request.POST and request.POST['parent'] != "-1":
                 parent = get_object_or_404(Categories,pk=int(request.POST['parent']))
+            else:
+                # if has no parent make "executive" the parent of this category
+                parent = Categories.objects.filter(organization=organization,category_name="Executive")[0]
 
-            # create the category, add the creator to the members list, and make the creator a moderator
-            if parent == None or gate_keeper == '' or (gate_keeper == "all_members" and request.user in parent.members.all()) or (gate_keeper == "moderators" and request.user in parent.moderators.all()):
-                category = Categories.objects.create(organization=organization,parent=parent,category_name=formatedCategoryName,closed_category = closedCategory,gateKeeper=gate_keeper)
+            # create the category
+            if parent.category_name == "Executive" or gate_keeper == '' or (gate_keeper == "all_members" and request.user in parent.members.all()) or (gate_keeper == "moderators" and request.user in parent.moderators.all()):
+                category = Categories.objects.create(organization=organization,
+                                                     parent=parent,
+                                                     category_name=formatedCategoryName,
+                                                     closed_category = closedCategory,
+                                                     gateKeeper=gate_keeper)
+
+                # add the creator to the members list
                 category.members.add(request.user)
+
+                # add creator as a moderator
                 category.moderators.add(request.user)
+                # add all parent mods to moderators list
+                for p in parent.moderators.all():
+                    category.moderators.add(p)
+
                 return HttpResponseRedirect(reverse('org_home:individualCategory', args=(organization.id,category.id)))
             else:
                 return render(request, 'org_home/newCategory.html', {
@@ -105,7 +120,8 @@ def submitNewCategory(request,organization_id,category_id=None):
 def membersView(request,organization_id,category_id):
     organization = get_object_or_404(Organizations,id=organization_id)
     category = get_object_or_404(Categories,pk=category_id)
-    return render(request,'org_home/members.html',{'organization':organization,'category': category})
+    return render(request,'org_home/members.html',{'organization':organization,'category': category,
+                                                   'categories_list':Categories.objects.filter(organization=organization)})
 
 # list of pending members in a category
 @login_required
@@ -113,7 +129,16 @@ def pendingMembersView(request,organization_id,category_id):
     # this html is also called in GrantAccess
     organization = get_object_or_404(Organizations,id=organization_id)
     category = get_object_or_404(Categories,pk=category_id)
-    return render(request,'org_home/pendingMembers.html',{'organization':organization,'category': category})
+    return render(request,'org_home/pendingMembers.html',{'organization':organization,'category': category,
+                                                          'categories_list':Categories.objects.filter(organization=organization)})
+
+# list of all moderators in a category
+@login_required
+def modsView(request,organization_id,category_id):
+    organization = get_object_or_404(Organizations,id=organization_id)
+    category = get_object_or_404(Categories,pk=category_id)
+    return render(request,'org_home/members.html',{'organization':organization,'category': category,
+                                                   'categories_list':Categories.objects.filter(organization=organization)})
 
 # join a category
 @login_required
@@ -124,11 +149,15 @@ def JoinCategory(request,organization_id,category_id):
     '''
     organization = get_object_or_404(Organizations,id=organization_id)
     category = get_object_or_404(Categories,pk=category_id)
-    # if category is open
-    if category.closed_category == False:
+    parent = Categories.objects.filter(organization=organization,category_name=category.parent)[0]
+
+    if request.user in parent.members.all():
         category.members.add(request.user)
     else:
-        category.pending_members.add(request.user)
+        if category.closed_category == False:
+            category.members.add(request.user)
+        else:
+            category.pending_members.add(request.user)
     return HttpResponseRedirect(reverse('org_home:individualCategory', args=(organization.id,category.id,)))
 
 # grant access to someone to become a member of a category
@@ -151,6 +180,8 @@ def GrantAccess(request,organization_id,category_id,pending_member_id):
         else:
             return render(request,'org_home/pendingMembers.html',{'organization':organization,'category': category,'error_message':'Must be a moderator to add user to ' +  category.category_name })
     return HttpResponseRedirect(reverse('org_home:pendingMembersView', args=(organization.id,category.id,)))
+
+
 
 # organization access #
 

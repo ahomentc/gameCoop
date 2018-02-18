@@ -1,8 +1,25 @@
-{% include "home/base.html"  %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'org_home/style.css' %}" />
 
-{% block content %}
+<article>
+    {% include "org_home/base.html" with organization=organization category=category categories_list=categories_list %}
 
-<br/><br/><a href = "{% url 'org_home:individualCategory' organization.id category.id %}">< Back to {{ category }} home</a><br/><br/>
-<a style="text-decoration:none" href="{% url 'org_work:projects' organization.id category.id %}">Projects</a>
+    {% block content %}
+    <main>
+        project stuff
+    </main>
 
-{% endblock %}
+    <div id="projMenu">
+        <h1 style="text-align:center;">{{ category }}  Projects</h1>
+        <ul style="list-style: none;">
+            <li><a href="">proj1</a></li>
+            <li><a href="">proj2</a></li>
+            <li><a href="">proj3</a></li>
+            <br/>
+            <a href="">Create New Project</a>
+        </ul>
+
+    </div>
+    {% endblock %}
+
+</article>

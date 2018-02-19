@@ -74,8 +74,9 @@ INSTALLED_APPS = [
 
     'vote.apps.VoteConfig',
     'home.apps.HomeConfig',
+    'tempPolls.apps.TemppollsConfig',
     'org_home.apps.OrgHomeConfig',
-    'user_profiles.apps.UserProfilesConfig',
+    'user_profiles.apps.UserProfilesConfig', #****
     'org_struct.apps.OrgStructConfig',
     'org_work.apps.OrgWorkConfig',
     'discuss.apps.DiscussConfig',

@@ -6,5 +6,5 @@ app_name = 'user_profiles'
 
 
 urlpatterns = [
-    url(r'^profile/$', views.ProfileView, name='ProfileView'),
+    url(r'^(?P<user>\S+)$', views.ProfileView, name='ProfileView'),
 ]

@@ -17,7 +17,7 @@
     <h3 style="height:2px">{{ post.title }}</h3>
 
     <div>
-        <p style="color:grey; height:4px">submitted by <a href="">{{ post.original_poster }}</a></p>
+        <p style="color:grey; height:4px">submitted by <a href="{% url 'user_profiles:ProfileView' post.original_poster %}">{{ post.original_poster }}</a></p>
         <div style="background-color: #F8F7F7; border-radius: 8px; padding:0px; width:100%">
             <p style="padding:10px">{{ post.content }}</p>
         </div>
@@ -35,7 +35,7 @@
         {% for key,valuesList in repliesDict.items %}
             <li>
                 <div style="background-color: #F8F7F7; border-radius: 8px; padding:0px; width:100%">
-                    <p style="height:4px; color:grey; padding-top:10px;padding-left:10px"> <a style="text-decoration:none" href="">{{ key.user }}</a> {{ key.pub_date|timesince }} ago</p>
+                    <p style="height:4px; color:grey; padding-top:10px;padding-left:10px"> <a style="text-decoration:none" href="{% url 'user_profiles:ProfileView' key.user %}">{{ key.user }}</a> {{ key.pub_date|timesince }} ago</p>
                     <p style="padding-bottom:10px;padding-left:10px">{{ key.content }}
                     <br/><button onclick="expandTextbox('{{key.id}}')" style="background:none; border:none; padding-top:17px; padding-left:3px; cursor: pointer;">reply</button>
                     <a href=""><img border="0" src="https://i.imgur.com/3Pey35k.png" width="12" height="12"/></a>
@@ -51,7 +51,7 @@
                 <li>
                     <div style="padding-left:40px">
                         <div style="background-color: #F8F7F7; border-radius: 8px; padding:0px; width:100%">
-                            <p style="height:4px; color:grey; padding-top:10px;padding-left:10px"> <a style="text-decoration:none" href="">{{ item.user }}</a> {{ item.pub_date|timesince }} ago</p>
+                            <p style="height:4px; color:grey; padding-top:10px;padding-left:10px"> <a style="text-decoration:none" href="{% url 'user_profiles:ProfileView' item.user %}">{{ item.user }}</a> {{ item.pub_date|timesince }} ago</p>
 
                             {% if item.parent.parent != null %}
                                 <p style="padding-left:10px"><strong>@ {{ item.parent.user }}</strong>: {{ item.content }}</p>

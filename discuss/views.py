@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
+from org_home import models as org_home_models
 from django.contrib.auth.decorators import login_required
 
 from org_home.models import Categories
@@ -11,6 +12,26 @@ from home.models import Organizations
 from .models import Post,Reply
 from .forms import newPost,newMainReply
 
+# decorator that checks if user is a member of the category
+def is_member(func):
+    def check(request,*args, **kwargs):
+        if 'category_id' in kwargs:
+            category = get_object_or_404(org_home_models.Categories,pk=kwargs['category_id'])
+        if 'organization_id' in kwargs:
+            organization = get_object_or_404(Organizations,pk=kwargs['organization_id'])
+        try:
+            if request.user in category.members.all():
+                return func(request,*args, **kwargs)
+            else:
+                return HttpResponseRedirect(reverse('org_home:individualCategory', args=(organization.id,category.id,)))
+        except:
+            return HttpResponseRedirect(reverse('org_home:individualCategory', args=(organization.id,category.id,)))
+    check.__doc__=func.__doc__
+    check.__name__=func.__name__
+    return check
+
+@is_member
+@login_required
 # org_home page of discussion. Show the "general" discussion.
 def Index(request,organization_id,category_id):
     organization = get_object_or_404(Organizations,pk=organization_id)
@@ -24,7 +45,8 @@ def Index(request,organization_id,category_id):
         no_posts_message = "No posts here yet"
     return render(request,'discuss/index.html',{'organization':organization,'category': category,'postsList':generalPostsList,'no_posts_message':no_posts_message,
                                                 'categories_list':Categories.objects.filter(organization=organization)})
-
+@is_member
+@login_required
 # the "idea" discussions
 def IdeaDiscussion(request,organization_id,category_id):
     organization = get_object_or_404(Organizations,pk=organization_id)
@@ -38,7 +60,8 @@ def IdeaDiscussion(request,organization_id,category_id):
         no_posts_message = "No posts here yet"
     return render(request,'discuss/ideaDiscussion.html',{'organization':organization,'category': category,'postsList':ideaPostsList,'no_posts_message':no_posts_message,
                                                          'categories_list':Categories.objects.filter(organization=organization)})
-
+@is_member
+@login_required
 # the "voting" discussion
 def VotingDiscussion(request,organization_id,category_id):
     organization = get_object_or_404(Organizations,pk=organization_id)
@@ -52,7 +75,8 @@ def VotingDiscussion(request,organization_id,category_id):
         no_posts_message = "No posts here yet"
     return render(request,'discuss/ideaDiscussion.html',{'organization':organization,'category': category,'postsList':votingPostsList,'no_posts_message':no_posts_message,
                                                          'categories_list':Categories.objects.filter(organization=organization)})
-
+@is_member
+@login_required
 # page to create a new Post
 def newPostView(request,organization_id,category_id):
     organization = get_object_or_404(Organizations,pk=organization_id)
@@ -61,6 +85,8 @@ def newPostView(request,organization_id,category_id):
     form = newPost()
     return render(request,'discuss/newPost.html',{'organization':organization,'category':category,'form':form})
 
+@is_member
+@login_required
 # submit that post
 def submitNewPost(request,organization_id,category_id):
     organization = get_object_or_404(Organizations,pk=organization_id)
@@ -118,6 +144,8 @@ def flattenDict(dict):
             tempList = tempList + flattenDict(value)
     return tempList
 
+@is_member
+@login_required
 # shows an individual post and all the replies to it
 def IndividualPost(request,organization_id,category_id,post_id):
     organization = get_object_or_404(Organizations,pk=organization_id)
@@ -137,6 +165,8 @@ def IndividualPost(request,organization_id,category_id,post_id):
     return render(request,'discuss/individualPost.html',{'organization':organization,'category':category,'post':post,'form':form,'repliesDict':sortedDict,
                                                          'categories_list':Categories.objects.filter(organization=organization)})
 
+@is_member
+@login_required
 # submit a reply
 def submitReply(request,organization_id,category_id,post_id,parent_id=None):
     organization = get_object_or_404(Organizations,pk=organization_id)
@@ -162,3 +192,39 @@ def submitReply(request,organization_id,category_id,post_id,parent_id=None):
     else:
         form = newMainReply()
     return render(request,'discuss/individualPost.html',{'organization':organization,'category':category,'post':post,'form':form})
+
+
+@is_member
+@login_required
+# edit a reply
+def editReply(request,organization_id,category_id,post_id,reply_id):
+    organization = get_object_or_404(Organizations,pk=organization_id)
+    category = get_object_or_404(Categories,pk=category_id)
+    post = get_object_or_404(Post,pk=post_id)
+
+    if request.method == "POST":
+        form = newMainReply(request.POST)
+        print(request.POST)
+        for c in request.POST:
+            if '_editTextbox' in c:
+                obj = get_object_or_404(Reply,id=reply_id)
+                obj.content = request.POST[c]
+                obj.save()
+        return HttpResponseRedirect(reverse('discuss:IndividualPost', args=(organization.id, category.id, post.id)))
+    else:
+        form = newMainReply()
+    return render(request, 'discuss/individualPost.html',
+                  {'organization': organization, 'category': category, 'post': post, 'form': form})
+
+@is_member
+@login_required
+# edit a reply
+def deleteReply(request,organization_id,category_id,post_id,reply_id):
+    organization = get_object_or_404(Organizations,pk=organization_id)
+    category = get_object_or_404(Categories,pk=category_id)
+    post = get_object_or_404(Post,pk=post_id)
+    obj = get_object_or_404(Reply,id=reply_id)
+    obj.content = '[deleted]'
+    obj.save()
+    form = newMainReply(request.POST)
+    return HttpResponseRedirect(reverse('discuss:IndividualPost', args=(organization.id, category.id, post.id)))

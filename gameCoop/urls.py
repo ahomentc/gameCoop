@@ -26,5 +26,4 @@ urlpatterns = [
     url(r'^user_profiles/', include('user_profiles.urls')),
     url(r'^discuss/', include('discuss.urls')),
     url(r'^home/', include('home.urls')),
-    url(r'^tempPolls/', include('tempPolls.urls')),
 ]

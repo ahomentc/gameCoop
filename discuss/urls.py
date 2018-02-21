@@ -10,6 +10,9 @@ urlpatterns = [
     url(r'^(?P<organization_id>\d+)/(?P<category_id>\d+)/(?P<post_id>\d+)/submitReply$', views.submitReply, name='submitReply'),
     url(r'^(?P<organization_id>\d+)/(?P<category_id>\d+)/(?P<post_id>\d+)/(?P<parent_id>\d+)/submitReply$', views.submitReply, name='submitSubReply'),
 
+    url(r'^(?P<organization_id>\d+)/(?P<category_id>\d+)/(?P<post_id>\d+)/(?P<reply_id>\d+)/editReply', views.editReply, name='editReply'),
+    url(r'^(?P<organization_id>\d+)/(?P<category_id>\d+)/(?P<post_id>\d+)/(?P<reply_id>\d+)/deleteReply', views.deleteReply, name='deleteReply'),
+
     url(r'^(?P<organization_id>\d+)/(?P<category_id>\d+)/(?P<post_id>\d+)/viewPost$', views.IndividualPost, name='IndividualPost'),
 
     url(r'^(?P<organization_id>\d+)/(?P<category_id>\d+)/ideaDiscussion', views.IdeaDiscussion, name='IdeaDiscussion'),

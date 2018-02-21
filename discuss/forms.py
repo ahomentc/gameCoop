@@ -12,7 +12,7 @@ class newPost(forms.ModelForm):
 
     title = forms.CharField(label='Title', max_length=100)
     content = forms.Textarea()
-    discussionType = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect())
+    discussionType = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect(),required=False)
 
 # form for textbox for a reply on the above post
 class newMainReply(forms.ModelForm):
@@ -21,4 +21,4 @@ class newMainReply(forms.ModelForm):
         model = Reply
         fields = ('content',)
 
-    content = forms.CharField(widget=forms.Textarea, label='')
+    content = forms.CharField(widget=forms.Textarea, label='',required=False)

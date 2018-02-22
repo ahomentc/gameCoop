@@ -18,4 +18,6 @@ urlpatterns = [
     url(r'^(?P<organization_id>\d+)/(?P<category_id>\d+)/ideaDiscussion', views.IdeaDiscussion, name='IdeaDiscussion'),
     url(r'^(?P<organization_id>\d+)/(?P<category_id>\d+)/votingDiscussion', views.VotingDiscussion, name='VotingDiscussion'),
     url(r'^(?P<organization_id>\d+)/(?P<category_id>\d+)/generalDiscussion', views.Index, name='Index'),
+
+    url(r'^replyVote',views.vote,name='replyVote')
 ]

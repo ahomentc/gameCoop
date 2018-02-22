@@ -2,25 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9ce08e88-6b8e-447c-9f78-c4ca2f898735" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/discuss/templatetags/__init__.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/discuss/templatetags/discuss_extras.py" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/discuss/forms.py" afterPath="$PROJECT_DIR$/discuss/forms.py" />
       <change beforePath="$PROJECT_DIR$/discuss/models.py" afterPath="$PROJECT_DIR$/discuss/models.py" />
       <change beforePath="$PROJECT_DIR$/discuss/templates/discuss/individualPost.html" afterPath="$PROJECT_DIR$/discuss/templates/discuss/individualPost.html" />
       <change beforePath="$PROJECT_DIR$/discuss/urls.py" afterPath="$PROJECT_DIR$/discuss/urls.py" />
       <change beforePath="$PROJECT_DIR$/discuss/views.py" afterPath="$PROJECT_DIR$/discuss/views.py" />
       <change beforePath="$PROJECT_DIR$/gameCoop/gameCoopRepo" afterPath="$PROJECT_DIR$/gameCoop/gameCoopRepo" />
-      <change beforePath="$PROJECT_DIR$/gameCoop/settings.py" afterPath="$PROJECT_DIR$/gameCoop/settings.py" />
-      <change beforePath="$PROJECT_DIR$/gameCoop/urls.py" afterPath="$PROJECT_DIR$/gameCoop/urls.py" />
-      <change beforePath="$PROJECT_DIR$/tempPolls/__init__.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tempPolls/admin.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tempPolls/apps.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tempPolls/migrations/__init__.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tempPolls/models.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tempPolls/static/tempPolls/style.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tempPolls/templates/tempPolls/index.html" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tempPolls/tests.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tempPolls/urls.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tempPolls/views.py" afterPath="" />
     </list>
     <ignored path="settings.py" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,27 +21,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/discuss/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="537">
-              <caret line="222" column="25" lean-forward="false" selection-start-line="222" selection-start-column="25" selection-end-line="222" selection-end-column="25" />
-              <folding />
+            <state relative-caret-position="657">
+              <caret line="288" column="0" lean-forward="true" selection-start-line="288" selection-start-column="0" selection-end-line="288" selection-end-column="0" />
+              <folding>
+                <element signature="e#24#63#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="individualPost.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="individualPost.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/discuss/templates/discuss/individualPost.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1082">
-              <caret line="74" column="0" lean-forward="true" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
+            <state relative-caret-position="-119">
+              <caret line="234" column="23" lean-forward="false" selection-start-line="234" selection-start-column="23" selection-end-line="234" selection-end-column="23" />
               <folding>
                 <element signature="n#style#0;n#p#0;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#1;n#div#0;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#1;n#div#0;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#2;n#div#0;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#3;n#div#0;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#p#1;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#button#0;n#p#1;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#button#1;n#p#1;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
@@ -63,9 +56,11 @@
                 <element signature="n#style#0;n#form#1;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#textarea#0;n#form#1;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#1;n#div#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#1;n#div#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#2;n#div#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#3;n#div#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#p#1;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#button#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#button#1;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
@@ -74,7 +69,18 @@
                 <element signature="n#style#0;n#input#0;n#form#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#form#1;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#textarea#0;n#form#1;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
-                <marker date="1519185183000" expanded="false" signature="7584:7620" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/discuss/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#32#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -83,21 +89,9 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/discuss/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+            <state relative-caret-position="390">
+              <caret line="30" column="17" lean-forward="false" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="17" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/discuss/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="123" lean-forward="false" selection-start-line="13" selection-start-column="123" selection-end-line="13" selection-end-column="123" />
-              <folding>
-                <element signature="e#0#32#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -130,16 +124,13 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
-        <option value="Python Script" />
         <option value="CSS File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>detail</find>
-      <find>set</find>
-      <find>print</find>
       <find>request.user.id</find>
       <find>home</find>
       <find>category</find>
@@ -167,6 +158,9 @@
       <find>edit</find>
       <find>texta</find>
       <find>img</find>
+      <find>button</find>
+      <find>error</find>
+      <find>id</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -175,10 +169,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/vote/views.py" />
-        <option value="$PROJECT_DIR$/discuss/templates/discuss/newPost.html" />
-        <option value="$PROJECT_DIR$/org_home/static/org_home/new_category_style.css" />
-        <option value="$PROJECT_DIR$/home/models.py" />
         <option value="$PROJECT_DIR$/org_home/templates/org_home/org_members.html" />
         <option value="$PROJECT_DIR$/org_home/templates/org_home/org_pending_members.html" />
         <option value="$PROJECT_DIR$/home/admin.py" />
@@ -222,9 +212,13 @@
         <option value="$PROJECT_DIR$/gameCoop/settings.py" />
         <option value="$PROJECT_DIR$/gameCoop/urls.py" />
         <option value="$PROJECT_DIR$/discuss/forms.py" />
+        <option value="$PROJECT_DIR$/discuss/models.py" />
+        <option value="$PROJECT_DIR$/discuss/templatetags/discuss/__init__.py" />
+        <option value="$PROJECT_DIR$/discuss/templatetags/discuss/discuss_extras.py" />
+        <option value="$PROJECT_DIR$/discuss/templatetags/__init__.py" />
+        <option value="$PROJECT_DIR$/discuss/templatetags/discuss_extras.py" />
         <option value="$PROJECT_DIR$/discuss/urls.py" />
         <option value="$PROJECT_DIR$/discuss/views.py" />
-        <option value="$PROJECT_DIR$/discuss/models.py" />
         <option value="$PROJECT_DIR$/discuss/templates/discuss/individualPost.html" />
       </list>
     </option>
@@ -324,6 +318,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/discuss" />
+      <recent name="$PROJECT_DIR$/discuss/images" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -400,7 +396,14 @@
       <option name="project" value="LOCAL" />
       <updated>1519011844623</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="New version of GameCoop">
+      <created>1519240724908</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1519240724908</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView">
@@ -485,43 +488,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/allauth/account/signup.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="18" lean-forward="false" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/allauth/account/logout.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/allauth/account/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/admin/base_site.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org_struct/templates/org_struct/monetary_distribution.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="51" column="17" lean-forward="false" selection-start-line="51" selection-start-column="17" selection-end-line="51" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/home/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -866,14 +832,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vote/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="116" column="25" lean-forward="true" selection-start-line="116" selection-start-column="25" selection-end-line="116" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/discuss/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -884,42 +842,81 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/discuss/urls.py">
+    <entry file="file://$PROJECT_DIR$/discuss/upArrow.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/discuss/templatetags/discuss/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="123" lean-forward="false" selection-start-line="13" selection-start-column="123" selection-end-line="13" selection-end-column="123" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/discuss/views.py">
+    <entry file="file://$PROJECT_DIR$/discuss/templatetags/discuss/discuss_extras.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="537">
-          <caret line="222" column="25" lean-forward="false" selection-start-line="222" selection-start-column="25" selection-end-line="222" selection-end-column="25" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/discuss/templatetags/discuss_extras.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="29" lean-forward="false" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/discuss/templatetags/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/discuss/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+        <state relative-caret-position="390">
+          <caret line="30" column="17" lean-forward="false" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="17" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vote/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="116" column="25" lean-forward="true" selection-start-line="116" selection-start-column="25" selection-end-line="116" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/discuss/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/discuss/templates/discuss/individualPost.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1082">
-          <caret line="74" column="0" lean-forward="true" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
+        <state relative-caret-position="-119">
+          <caret line="234" column="23" lean-forward="false" selection-start-line="234" selection-start-column="23" selection-end-line="234" selection-end-column="23" />
           <folding>
             <element signature="n#style#0;n#p#0;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#1;n#div#0;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#1;n#div#0;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#2;n#div#0;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#3;n#div#0;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#p#1;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#0;n#p#1;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#1;n#p#1;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
@@ -930,9 +927,11 @@
             <element signature="n#style#0;n#form#1;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#textarea#0;n#form#1;n#div#0;n#li#0;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#1;n#div#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#1;n#div#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#2;n#div#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#3;n#div#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#p#1;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#1;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
@@ -941,7 +940,16 @@
             <element signature="n#style#0;n#input#0;n#form#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#form#1;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#textarea#0;n#form#1;n#div#0;n#div#0;n#li#1;n#ul#0;n#main#0;n#article#0;n#!!top" expanded="true" />
-            <marker date="1519185183000" expanded="false" signature="7584:7620" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/discuss/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="657">
+          <caret line="288" column="0" lean-forward="true" selection-start-line="288" selection-start-column="0" selection-end-line="288" selection-end-column="0" />
+          <folding>
+            <element signature="e#24#63#0" expanded="true" />
           </folding>
         </state>
       </provider>

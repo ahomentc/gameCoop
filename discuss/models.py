@@ -15,7 +15,8 @@ class Post(models.Model):
     content = models.TextField()
     original_poster = models.ForeignKey(User,blank=True,null=True)
     pub_date = models.DateTimeField('date published', blank=True, null=True)
-    score = models.IntegerField(default=0);
+    userUpVotes = models.ManyToManyField(User, blank=True, related_name='PostUpVotes')
+    userDownVotes = models.ManyToManyField(User, blank=True, related_name='PostDownVotes')
 
 class Reply(models.Model):
     class Meta:
@@ -26,4 +27,5 @@ class Reply(models.Model):
     content = models.TextField()
     user = models.ForeignKey(User,blank=True,null=True)
     pub_date = models.DateTimeField('data published',blank=True,null=True)
-    score = models.IntegerField(default=0);
+    userUpVotes = models.ManyToManyField(User, blank=True, related_name='RepliesUpVotes')
+    userDownVotes = models.ManyToManyField(User, blank=True, related_name='RepliesDownVotes')

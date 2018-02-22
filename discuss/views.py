@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse,HttpRequest
 from django.urls import reverse
 from django.utils import timezone
 from org_home import models as org_home_models
 from django.contrib.auth.decorators import login_required
+
 
 from org_home.models import Categories
 from home.models import Organizations
@@ -144,6 +145,22 @@ def flattenDict(dict):
             tempList = tempList + flattenDict(value)
     return tempList
 
+def getRepliesUserLiked(post,user):
+    allReplies = Reply.objects.filter(post=post)
+    replies = []
+    for reply in allReplies:
+        if user in reply.userUpVotes.all():
+            replies.append(reply)
+    return replies
+
+def getRepliesUserDisliked(post,user):
+    allReplies = Reply.objects.filter(post=post)
+    replies = []
+    for reply in allReplies:
+        if user in reply.userDownVotes.all():
+            replies.append(reply)
+    return replies
+
 @is_member
 @login_required
 # shows an individual post and all the replies to it
@@ -160,10 +177,14 @@ def IndividualPost(request,organization_id,category_id,post_id):
     for key in sorted(repliesDict.keys(),key=lambda x: x.pub_date):
         sortedDict[key] = repliesDict[key]
 
+    repliesUserLiked = getRepliesUserLiked(post,request.user)
+    repliesUserDisliked = getRepliesUserDisliked(post, request.user)
 
     form = newMainReply()
     return render(request,'discuss/individualPost.html',{'organization':organization,'category':category,'post':post,'form':form,'repliesDict':sortedDict,
-                                                         'categories_list':Categories.objects.filter(organization=organization)})
+                                                         'categories_list':Categories.objects.filter(organization=organization),
+                                                         'repliesUserLiked':repliesUserLiked,
+                                                         'repliesUserDisliked': repliesUserDisliked})
 
 @is_member
 @login_required
@@ -223,8 +244,45 @@ def deleteReply(request,organization_id,category_id,post_id,reply_id):
     organization = get_object_or_404(Organizations,pk=organization_id)
     category = get_object_or_404(Categories,pk=category_id)
     post = get_object_or_404(Post,pk=post_id)
-    obj = get_object_or_404(Reply,id=reply_id)
-    obj.content = '[deleted]'
-    obj.save()
+    reply = get_object_or_404(Reply,id=reply_id)
+    reply.content = '[deleted]'
+    reply.save()
     form = newMainReply(request.POST)
     return HttpResponseRedirect(reverse('discuss:IndividualPost', args=(organization.id, category.id, post.id)))
+
+
+#vote for a reply
+def vote(request):
+    reply_id = int(request.POST.get('id'))
+    vote_type = request.POST.get('type')
+    vote_action = request.POST.get('action')
+
+    reply = get_object_or_404(Reply, pk=reply_id)
+
+    thisUserUpVote = reply.userUpVotes.filter(id = request.user.id).count()
+    thisUserDownVote = reply.userDownVotes.filter(id = request.user.id).count()
+
+    if (vote_action == 'vote'):
+        if (thisUserUpVote == 0) and (thisUserDownVote == 0):
+            if (vote_type == 'up'):
+                reply.userUpVotes.add(request.user)
+            elif (vote_type == 'down'):
+                reply.userDownVotes.add(request.user)
+            else:
+                return HttpResponse('error-unknown vote type')
+        else:
+            return HttpResponse('error - already voted')
+    elif (vote_action == 'recall-vote'):
+        if (vote_type == 'up') and (thisUserUpVote == 1):
+            reply.userUpVotes.remove(request.user)
+        elif (vote_type == 'down') and (thisUserDownVote ==1):
+            reply.userDownVotes.remove(request.user)
+        else:
+            return HttpResponse('error - unknown vote type or no vote to recall')
+    else:
+        return HttpResponse('error - bad action')
+
+    num_votes = reply.userUpVotes.count() - reply.userDownVotes.count()
+
+    return HttpResponse(num_votes)
+

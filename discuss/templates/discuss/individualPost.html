@@ -23,11 +23,25 @@
 
     <div>
         <p style="color:grey; height:4px">submitted by <a href="{% url 'user_profiles:ProfileView' post.original_poster %}">{{ post.original_poster }}</a></p>
-        <div style="background-color: #F8F7F7; border-radius: 8px; padding:0px; width:100%">
-            <p style="padding:10px">{{ post.content }}</p>
+        <div style="background-color: #F8F7F7; display: inline-block; border-radius: 8px; padding:0px; margin-bottom: 10px; margin-top: 5px; min-height: 70px; width:100%">
+            <div class="vote-buttons" style="float:right; vertical-align:top; margin-left: 10px; margin-right: 20px; padding-left:5px; padding-bottom:0px; padding-top: 10px;">
+                {% if not userLikedPost %}
+                    <img style="cursor: pointer;" class="vote-up-post" id="{{post.id}}_postUp"  src="https://i.imgur.com/3Pey35k.png" width="12" height="12"/>
+                {% else %}
+                    <img style="cursor: pointer;" class="vote-up-post selected" id="{{post.id}}_postUp" src="https://i.imgur.com/MKzD4pl.png" width="12" height="12"/>
+                {% endif %}
+
+                <p id="{{post.id}}_score" style="text-align:center; padding:0;margin:5px 0px 5px 0px">{{ post.userUpVotes.count|subtract:post.userDownVotes.count }}</p>
+
+                {% if not userDislikedPost %}
+                    <img style="cursor: pointer;" class="vote-down-post" id="{{post.id}}_postDown" src="https://i.imgur.com/G008NCi.png" width="12" height="12"/>
+                {% else %}
+                    <img style="cursor: pointer;" class="vote-down-post selected" id="{{post.id}}_postDown" src="https://i.imgur.com/WxXRt2B.png" width="12" height="12"/>
+                {% endif %}
+            </div>
+
+            <p style="vertical-align: top; padding:10px; margin: 0px; ">{{ post.content }}</p>
         </div>
-        <a href=""><img border="0" src="https://i.imgur.com/3Pey35k.png" width="12" height="12"/></a>
-        <a href=""><img style="padding-left:5px; padding-bottom:0px" border="0" src="https://i.imgur.com/G008NCi.png" width="12" height="12"/></a>
         <form action="{% url 'discuss:submitReply' organization.id category.id post.id %}" method="post">
         {% csrf_token %}
             {{ form }}
@@ -49,7 +63,7 @@
                         {% if repliesUserLiked is None or key not in repliesUserLiked %}
                             <img style="cursor: pointer;" class="vote-up" id="{{key.id}}_replyUp"  src="https://i.imgur.com/3Pey35k.png" width="12" height="12"/>
                         {% else %}
-                            <img style="cursor: pointer;" class="vote-up selected" id="{{key.id}}_replyUpSelected" src="https://i.imgur.com/MKzD4pl.png" width="12" height="12"/>
+                            <img style="cursor: pointer;" class="vote-up selected" id="{{key.id}}_replyUp" src="https://i.imgur.com/MKzD4pl.png" width="12" height="12"/>
                         {% endif %}
 
                         <p id="{{key.id}}_score" style="text-align:center; padding:0;margin:5px 0px 5px 0px">{{ key.userUpVotes.count|subtract:key.userDownVotes.count }}</p>
@@ -57,7 +71,7 @@
                         {% if repliesUserDisliked is None or key not in repliesUserDisliked %}
                             <img style="cursor: pointer;" class="vote-down" id="{{key.id}}_replyDown" src="https://i.imgur.com/G008NCi.png" width="12" height="12"/>
                         {% else %}
-                            <img style="cursor: pointer;" class="vote-down selected" id="{{key.id}}_replyDownSelected" src="https://i.imgur.com/WxXRt2B.png" width="12" height="12"/>
+                            <img style="cursor: pointer;" class="vote-down selected" id="{{key.id}}_replyDown" src="https://i.imgur.com/WxXRt2B.png" width="12" height="12"/>
                         {% endif %}
                     </div>
 
@@ -110,18 +124,18 @@
 
                             <!--liking/disliking-->
                             <div class="vote-buttons" style="float:right; vertical-align: middle; margin-left: 10px; margin-right: 20px; padding-left:5px; padding-bottom:0px">
-                                {% if repliesUserLiked is None or key not in repliesUserLiked %}
+                                {% if repliesUserLiked is None or item not in repliesUserLiked %}
                                     <img style="cursor: pointer;" class="vote-up" id="{{item.id}}_replyUp"  src="https://i.imgur.com/3Pey35k.png" width="12" height="12"/>
                                 {% else %}
-                                    <img style="cursor: pointer;" class="vote-up selected" id="{{item.id}}_replyUpSelected" src="https://i.imgur.com/MKzD4pl.png" width="12" height="12"/>
+                                    <img style="cursor: pointer;" class="vote-up selected" id="{{item.id}}_replyUp" src="https://i.imgur.com/MKzD4pl.png" width="12" height="12"/>
                                 {% endif %}
 
-                                    <p id="{{item.id}}_score" style="text-align:center; padding:0;margin:5px 0px 5px 0px">{{ key.userUpVotes.count|subtract:key.userDownVotes.count }}</p>
+                                <p id="{{item.id}}_score" style="text-align:center; padding:0;margin:5px 0px 5px 0px">{{ item.userUpVotes.count|subtract:item.userDownVotes.count }}</p>
 
-                                {% if repliesUserDisliked is None or key not in repliesUserDisliked %}
+                                {% if repliesUserDisliked is None or item not in repliesUserDisliked %}
                                     <img style="cursor: pointer;" class="vote-down" id="{{item.id}}_replyDown" src="https://i.imgur.com/G008NCi.png" width="12" height="12"/>
                                 {% else %}
-                                    <img style="cursor: pointer;" class="vote-down selected" id="{{item.id}}_replyDownSelected" src="https://i.imgur.com/WxXRt2B.png" width="12" height="12"/>
+                                    <img style="cursor: pointer;" class="vote-down selected" id="{{item.id}}_replyDown" src="https://i.imgur.com/WxXRt2B.png" width="12" height="12"/>
                                 {% endif %}
                             </div>
 
@@ -203,9 +217,11 @@
                var id = this.id;
                var replyNum = id.split("_")[0];
                var contentId = replyNum + '_score';
+               var oppositeId1 = replyNum + '_replyDown';
 
                var vote_type = 'up';
-               if ($(this).hasClass('selected'))
+               var clicked = $('#' + id);
+               if (clicked.hasClass('selected'))
                {
                     var vote_action = 'recall-vote';
                     $.post("{% url 'discuss:replyVote' %}", {id:replyNum, type:vote_type, action:vote_action,
@@ -215,9 +231,9 @@
                             window.alert(response);
                         } else{
                             var responseNum = Number(response);
-                            document.getElementById(id).removeAttribute('src');
-                            document.getElementById(id).setAttribute('src', 'https://i.imgur.com/3Pey35k.png');
-                            document.getElementById(id).className = 'vote-up';
+                            clicked.removeAttr('src');
+                            clicked.attr('src', 'https://i.imgur.com/3Pey35k.png');
+                            clicked.removeClass('selected');
                             document.getElementById(contentId).innerHTML = responseNum;
                         }
                     });
@@ -232,10 +248,17 @@
                             window.alert(response);
                         } else{
                             var responseNum = Number(response);
-                            document.getElementById(id).removeAttribute('src');
-                            document.getElementById(id).setAttribute('src', 'https://i.imgur.com/MKzD4pl.png');
-                            document.getElementById(id).className = 'vote-up selected';
+                            clicked.removeAttr('src');
+                            clicked.attr('src', 'https://i.imgur.com/MKzD4pl.png');
+                            clicked.addClass('selected');
                             document.getElementById(contentId).innerHTML = responseNum;
+
+                            var opposite = $('#' + oppositeId1);
+                            if (opposite.hasClass('selected')){
+                                opposite.removeAttr('src');
+                                opposite.attr('src','https://i.imgur.com/G008NCi.png');
+                                opposite.removeClass('selected');
+                            }
                         }
                     });
                }
@@ -244,9 +267,11 @@
                var id = this.id;
                var replyNum = id.split("_")[0];
                var contentId = replyNum + '_score';
+               var oppositeId1 = replyNum + '_replyUp';
 
                var vote_type = 'down';
-               if ($(this).hasClass('selected'))
+               var clicked = $('#' + id);
+               if (clicked.hasClass('selected'))
                {
                     var vote_action = 'recall-vote';
                     $.post("{% url 'discuss:replyVote' %}", {id:replyNum, type:vote_type, action:vote_action,
@@ -256,9 +281,9 @@
                             window.alert(response);
                         } else{
                             var responseNum = Number(response);
-                            document.getElementById(id).removeAttribute('src');
-                            document.getElementById(id).setAttribute('src', 'https://i.imgur.com/G008NCi.png');
-                            document.getElementById(id).className = 'vote-down';
+                            clicked.removeAttr('src');
+                            clicked.attr('src', 'https://i.imgur.com/G008NCi.png');
+                            clicked.removeClass('selected');
                             document.getElementById(contentId).innerHTML = responseNum;
                         }
                     });
@@ -273,10 +298,124 @@
                             window.alert(response);
                         } else{
                             var responseNum = Number(response);
-                            document.getElementById(id).removeAttribute('src');
-                            document.getElementById(id).setAttribute('src', 'https://i.imgur.com/WxXRt2B.png');
-                            document.getElementById(id).className = 'vote-down selected';
+
+                            clicked.removeAttr('src');
+                            clicked.attr('src', 'https://i.imgur.com/WxXRt2B.png');
+                            clicked.addClass('selected');
                             document.getElementById(contentId).innerHTML = responseNum;
+
+                            var opposite = $('#' + oppositeId1);
+                            if (opposite.hasClass('selected')){
+                                opposite.removeAttr('src');
+                                opposite.attr('src','https://i.imgur.com/3Pey35k.png')
+                                opposite.removeClass('selected');
+                            }
+                        }
+                    });
+               }
+            });
+
+            // post
+
+            $('div.vote-buttons img.vote-up-post').click(function() {
+                var id = this.id;
+                var postNum = id.split("_")[0];
+                var contentId = postNum + '_score';
+                var oppositeId1 = postNum + '_postDown';
+
+                var vote_type = 'up';
+                var clicked = $('#' + id);
+                if (clicked.hasClass('selected'))
+                {
+                    var vote_action = 'recall-vote';
+                    $.post("{% url 'discuss:postVote' %}", {id:postNum, type:vote_type, action:vote_action,
+                        csrfmiddlewaretoken:'{{ csrf_token }}'}, function(response)
+                    {
+                        if(response.includes("error")) {
+                            window.alert(response);
+                        } else{
+                            var responseNum = Number(response);
+                            clicked.removeAttr('src');
+                            clicked.attr('src', 'https://i.imgur.com/3Pey35k.png');
+                            clicked.removeClass('selected');
+                            document.getElementById(contentId).innerHTML = responseNum;
+                        }
+                    });
+               }
+               else
+               {
+                    var vote_action = 'vote';
+                    $.post("{% url 'discuss:postVote' %}", {id:postNum, type:vote_type, action:vote_action,
+                        csrfmiddlewaretoken:'{{ csrf_token }}'}, function(response)
+                    {
+                        if(response.includes("error")) {
+                            window.alert(response);
+                        } else{
+                            var responseNum = Number(response);
+
+                            clicked.removeAttr('src');
+                            clicked.attr('src', 'https://i.imgur.com/MKzD4pl.png');
+                            clicked.addClass('selected');
+                            document.getElementById(contentId).innerHTML = responseNum;
+
+                            var opposite = $('#' + oppositeId1);
+                            if (opposite.hasClass('selected')){
+                                opposite.removeAttr('src');
+                                opposite.attr('src','https://i.imgur.com/G008NCi.png');
+                                opposite.removeClass('selected');
+                            }
+                        }
+                    });
+               }
+            });
+
+            $('div.vote-buttons img.vote-down-post').click(function() {
+                var id = this.id;
+                var postNum = id.split("_")[0];
+                var contentId = postNum + '_score';
+                var oppositeId1 = postNum + '_postUp';
+
+                var vote_type = 'down';
+                var clicked = $('#' + id);
+                if (clicked.hasClass('selected'))
+                {
+                    var vote_action = 'recall-vote';
+                    $.post("{% url 'discuss:postVote' %}", {id:postNum, type:vote_type, action:vote_action,
+                        csrfmiddlewaretoken:'{{ csrf_token }}'}, function(response)
+                    {
+                        if(response.includes("error")) {
+                            window.alert(response);
+                        } else{
+                            var responseNum = Number(response);
+                            clicked.removeAttr('src');
+                            clicked.attr('src', 'https://i.imgur.com/G008NCi.png');
+                            clicked.removeClass('selected');
+                            document.getElementById(contentId).innerHTML = responseNum;
+                        }
+                    });
+               }
+               else
+               {
+                    var vote_action = 'vote';
+                    $.post("{% url 'discuss:postVote' %}", {id:postNum, type:vote_type, action:vote_action,
+                        csrfmiddlewaretoken:'{{ csrf_token }}'}, function(response)
+                    {
+                        if(response.includes("error")) {
+                            window.alert(response);
+                        } else{
+                            var responseNum = Number(response);
+
+                            clicked.removeAttr('src');
+                            clicked.attr('src', 'https://i.imgur.com/WxXRt2B.png');
+                            clicked.addClass('selected');
+                            document.getElementById(contentId).innerHTML = responseNum;
+
+                            var opposite = $('#' + oppositeId1);
+                            if (opposite.hasClass('selected')){
+                                opposite.removeAttr('src');
+                                opposite.attr('src','https://i.imgur.com/3Pey35k.png')
+                                opposite.removeClass('selected');
+                            }
                         }
                     });
                }

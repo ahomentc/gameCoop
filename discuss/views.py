@@ -180,11 +180,16 @@ def IndividualPost(request,organization_id,category_id,post_id):
     repliesUserLiked = getRepliesUserLiked(post,request.user)
     repliesUserDisliked = getRepliesUserDisliked(post, request.user)
 
+    userLikedPost = request.user in post.userUpVotes.all()
+    userDislikedPost = request.user in post.userDownVotes.all()
+
     form = newMainReply()
     return render(request,'discuss/individualPost.html',{'organization':organization,'category':category,'post':post,'form':form,'repliesDict':sortedDict,
                                                          'categories_list':Categories.objects.filter(organization=organization),
                                                          'repliesUserLiked':repliesUserLiked,
-                                                         'repliesUserDisliked': repliesUserDisliked})
+                                                         'repliesUserDisliked': repliesUserDisliked,
+                                                         'userLikedPost':userLikedPost,
+                                                         'userDislikedPost':userDislikedPost})
 
 @is_member
 @login_required
@@ -252,7 +257,7 @@ def deleteReply(request,organization_id,category_id,post_id,reply_id):
 
 
 #vote for a reply
-def vote(request):
+def voteForReply(request):
     reply_id = int(request.POST.get('id'))
     vote_type = request.POST.get('type')
     vote_action = request.POST.get('action')
@@ -263,13 +268,14 @@ def vote(request):
     thisUserDownVote = reply.userDownVotes.filter(id = request.user.id).count()
 
     if (vote_action == 'vote'):
-        if (thisUserUpVote == 0) and (thisUserDownVote == 0):
-            if (vote_type == 'up'):
-                reply.userUpVotes.add(request.user)
-            elif (vote_type == 'down'):
-                reply.userDownVotes.add(request.user)
-            else:
-                return HttpResponse('error-unknown vote type')
+        if(vote_type == 'up' and thisUserUpVote == 0):
+            if(thisUserDownVote == 1):
+                reply.userDownVotes.remove(request.user)
+            reply.userUpVotes.add(request.user)
+        elif(vote_type == 'down' and thisUserDownVote == 0):
+            if(thisUserUpVote == 1):
+                reply.userUpVotes.remove(request.user)
+            reply.userDownVotes.add(request.user)
         else:
             return HttpResponse('error - already voted')
     elif (vote_action == 'recall-vote'):
@@ -281,8 +287,40 @@ def vote(request):
             return HttpResponse('error - unknown vote type or no vote to recall')
     else:
         return HttpResponse('error - bad action')
-
     num_votes = reply.userUpVotes.count() - reply.userDownVotes.count()
+    return HttpResponse(num_votes)
 
+#vote for a post
+def voteForPost(request):
+    post_id = int(request.POST.get('id'))
+    vote_type = request.POST.get('type')
+    vote_action = request.POST.get('action')
+
+    post = get_object_or_404(Post, pk=post_id)
+
+    thisUserUpVote = post.userUpVotes.filter(id = request.user.id).count()
+    thisUserDownVote = post.userDownVotes.filter(id = request.user.id).count()
+
+    if (vote_action == 'vote'):
+        if(vote_type == 'up' and thisUserUpVote == 0):
+            if(thisUserDownVote == 1):
+                post.userDownVotes.remove(request.user)
+            post.userUpVotes.add(request.user)
+        elif(vote_type == 'down' and thisUserDownVote == 0):
+            if(thisUserUpVote == 1):
+                post.userUpVotes.remove(request.user)
+            post.userDownVotes.add(request.user)
+        else:
+            return HttpResponse('error - already voted')
+    elif (vote_action == 'recall-vote'):
+        if (vote_type == 'up') and (thisUserUpVote == 1):
+            post.userUpVotes.remove(request.user)
+        elif (vote_type == 'down') and (thisUserDownVote ==1):
+            post.userDownVotes.remove(request.user)
+        else:
+            return HttpResponse('error - unknown vote type or no vote to recall')
+    else:
+        return HttpResponse('error - bad action')
+    num_votes = post.userUpVotes.count() - post.userDownVotes.count()
     return HttpResponse(num_votes)
 
